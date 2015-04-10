@@ -1,14 +1,7 @@
 require "test_helper"
 
-class Knuckles::SerializerTest < Minitest::Test
+class SerializerTest < Minitest::Test
   Post = Struct.new(:id, :title)
-
-  def test_serializing_without_attributes
-    serializer = Knuckles::Serializer.new
-    post = Post.new(100, "Knuckles")
-
-    assert_equal serializer.serialize(post), {}
-  end
 
   def test_serializing_an_object
     serializer = Class.new(Knuckles::Serializer) do
@@ -18,7 +11,7 @@ class Knuckles::SerializerTest < Minitest::Test
     end
 
     post = Post.new(100, "Knuckles")
-    serialized = serializer.new.serialize(post)
+    serialized = serializer.new(post).serialize
 
     assert_equal serialized, { id: 100, title: "Knuckles" }
   end
@@ -29,14 +22,27 @@ class Knuckles::SerializerTest < Minitest::Test
         %i[id title]
       end
 
-      def title(object)
+      def title
         object.title.capitalize
       end
     end
 
     post = Post.new(100, "KNUCKLES")
-    serialized = serializer.new.serialize(post)
+    serialized = serializer.new(post).serialize
 
     assert_equal "Knuckles", serialized[:title]
+  end
+
+  def test_serializing_without_attributes
+    post = Post.new(100, "Knuckles")
+    serializer = Knuckles::Serializer.new(post)
+
+    assert_equal({}, serializer.serialize)
+  end
+
+  def test_serializing_without_an_object
+    serializer = Knuckles::Serializer.new
+
+    assert_equal({}, serializer.serialize)
   end
 end
