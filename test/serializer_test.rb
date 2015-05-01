@@ -1,8 +1,6 @@
 require "test_helper"
 
 class SerializerTest < Minitest::Test
-  Post = Struct.new(:id, :title)
-
   def test_serializing_an_object
     serializer = Class.new(Knuckles::Serializer) do
       def attributes
@@ -13,7 +11,7 @@ class SerializerTest < Minitest::Test
     post = Post.new(100, "Knuckles")
     serialized = serializer.new(post).serialize
 
-    assert_equal serialized, { id: 100, title: "Knuckles" }
+    assert_equal({ id: 100, title: "Knuckles" }, serialized)
   end
 
   def test_overriding_properties
