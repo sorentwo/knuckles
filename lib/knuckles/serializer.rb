@@ -1,32 +1,31 @@
 module Knuckles
   NullObject = Class.new
 
-  class Serializer
+  class Serializer < SimpleDelegator
     attr_accessor :object
+    attr_writer :dependencies
 
-    def initialize(object = NullObject)
-      @object = object
-    end
-
-    def root
-    end
-
-    def attributes
-      []
-    end
-
-    def includes
+    def self.includes
       {}
     end
 
-    def serialize
-      serialized_attributes
+    def self.attributes
+      []
     end
 
-    def serialized_attributes
-      attributes.each_with_object({}) do |prop, memo|
-        receiver = respond_to?(prop) ? self : object
-        memo[prop] = receiver.public_send(prop)
+    def initialize(object)
+      super
+
+      @object = object
+    end
+
+    def dependencies
+      @dependencies ||= []
+    end
+
+    def serialize
+      self.class.attributes.each_with_object({}) do |prop, memo|
+        memo[prop] = public_send(prop)
       end
     end
   end

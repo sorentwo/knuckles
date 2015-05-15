@@ -3,7 +3,7 @@ require "test_helper"
 class SerializerTest < Minitest::Test
   def test_serializing_an_object
     serializer = Class.new(Knuckles::Serializer) do
-      def attributes
+      def self.attributes
         %i[id title]
       end
     end
@@ -16,7 +16,7 @@ class SerializerTest < Minitest::Test
 
   def test_overriding_properties
     serializer = Class.new(Knuckles::Serializer) do
-      def attributes
+      def self.attributes
         %i[id title]
       end
 
@@ -34,12 +34,6 @@ class SerializerTest < Minitest::Test
   def test_serializing_without_attributes
     post = Post.new(100, "Knuckles")
     serializer = Knuckles::Serializer.new(post)
-
-    assert_equal({}, serializer.serialize)
-  end
-
-  def test_serializing_without_an_object
-    serializer = Knuckles::Serializer.new
 
     assert_equal({}, serializer.serialize)
   end
