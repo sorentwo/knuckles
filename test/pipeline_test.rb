@@ -2,8 +2,8 @@ require "test_helper"
 
 class PipelineTest < Minitest::Test
   def test_reducing_with_filters
-    filter_a = -> (str, _) { str.map(&:downcase) }
-    filter_b = -> (str, _) { str.map(&:strip) }
+    filter_a = -> (strs, _) { strs.map(&:downcase) }
+    filter_b = -> (strs, _) { strs.map(&:strip) }
 
     pipeline = Knuckles::Pipeline.new([
       filter_a,
