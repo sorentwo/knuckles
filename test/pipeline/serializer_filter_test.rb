@@ -6,9 +6,13 @@ class SerializerFilterTest < Minitest::Test
   def test_objects_are_wrapped_in_a_serializer
     serializer = Struct.new(:node)
     context = { serializer: serializer }
-    output  = Filter.call([Object.new], context)
+    output = Filter.call([Object.new], context)
 
     assert_equal 1, output.length
     assert_instance_of serializer, output.first
+  end
+
+  def test_serializer_required_in_context
+    assert_raises(KeyError) { Filter.call([], {}) }
   end
 end
