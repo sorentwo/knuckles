@@ -1,15 +1,31 @@
 require "test_helper"
 
 class PipelineTest < Minitest::Test
-  def test_reducing_with_filters
-    filter_a = -> (strs, _) { strs.map(&:downcase) }
-    filter_b = -> (strs, _) { strs.map(&:strip) }
+  module Filter
+    extend self
 
-    pipeline = Knuckles::Pipeline.new([
-      filter_a,
-      filter_b
+    def name; 'downcase'; end
+    def call(strs, _); strs.map(&:downcase); end
+  end
+
+  def test_reducing_with_filters
+    pipeline = Knuckles::Pipeline.new([Filter])
+
+    assert_equal ['tails'], pipeline.call(['TAILS'])
+  end
+
+  def test_instrumenting_filters
+    pipeline = Knuckles::Pipeline.new([Filter])
+    notifier = Minitest::Mock.new
+
+    notifier.expect(:instrument, [],
+      ['knuckles.serialize_filter', { filter: 'downcase', context: {}}
     ])
 
-    assert_equal ['tails'], pipeline.call([' TAILS '])
+    pipeline.notifications = notifier
+
+    pipeline.call([Object.new])
+
+    notifier.verify
   end
 end

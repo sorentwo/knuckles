@@ -4,15 +4,37 @@ module Knuckles
     autoload :NodeFilter,       'knuckles/pipeline/node_filter'
     autoload :SerializerFilter, 'knuckles/pipeline/serializer_filter'
 
+    def self.notifications
+      if Object.const_defined?('ActiveSupport::Notifications')
+        ActiveSupport::Notifications
+      else
+        Knuckles::Notifications
+      end
+    end
+
     attr_reader :filters
+    attr_accessor :notifications
 
     def initialize(filters = [])
-      @filters = filters.freeze
+      @filters       = filters.freeze
+      @notifications = self.class.notifications
     end
 
     def call(objects, context = {})
       filters.reduce(objects) do |object, filter|
-        filter.call(object, context)
+        payload = { filter: filter.name, context: context }
+
+        instrument('knuckles.serialize_filter', payload) do
+          filter.call(object, context)
+        end
+      end
+    end
+
+    private
+
+    def instrument(operation, payload)
+      notifications.instrument(operation, payload) do |payload|
+        yield payload
       end
     end
   end
