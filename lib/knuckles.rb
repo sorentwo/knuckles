@@ -1,3 +1,4 @@
+require "knuckles/node"
 require "knuckles/pipeline/filter"
 require "knuckles/pipeline"
 require "knuckles/serializer"

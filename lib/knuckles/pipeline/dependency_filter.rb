@@ -4,20 +4,17 @@ module Knuckles
   class Pipeline
     class DependencyFilter < Filter
       def call
-        includes = nil
-
         nodes.map do |node|
-          includes ||= node.class.includes
-          node.dependencies = extract_dependencies(includes, node)
+          node.dependencies = extract_dependencies(node.serializer)
           node
         end
       end
 
       private
 
-      def extract_dependencies(includes, node)
-        includes.each_with_object(set_backed_hash) do |(key, _), hash|
-          case relation = node.public_send(key)
+      def extract_dependencies(serializer)
+        serializer.class.includes.each_with_object(set_backed_hash) do |(key, _), hash|
+          case relation = serializer.public_send(key)
           when Array then hash[key] += relation
           when nil   then hash[key]
           else hash[key] << relation

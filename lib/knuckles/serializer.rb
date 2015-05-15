@@ -1,9 +1,6 @@
 module Knuckles
-  NullObject = Class.new
-
   class Serializer < SimpleDelegator
     attr_accessor :object
-    attr_writer :dependencies
 
     def self.includes
       {}
@@ -17,10 +14,6 @@ module Knuckles
       super
 
       @object = object
-    end
-
-    def dependencies
-      @dependencies ||= []
     end
 
     def serialize

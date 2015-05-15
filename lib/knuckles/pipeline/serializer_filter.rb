@@ -4,7 +4,10 @@ module Knuckles
       def call
         serializer = context.fetch(:serializer)
 
-        nodes.map { |node| serializer.new(node) }
+        nodes.map do |node|
+          node.serializer = serializer.new(node.object)
+          node
+        end
       end
     end
   end

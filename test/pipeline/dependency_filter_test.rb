@@ -20,7 +20,8 @@ class DependencyFilterTest < Minitest::Test
     post.comments = [comm_a, comm_b]
 
     serializer   = PostSerializer.new(post)
-    output       = Filter.call([serializer], {})
+    node         = Knuckles::Node.new(post, serializer: serializer)
+    output       = Filter.call([node], {})
     dependencies = output.first.dependencies
 
     assert dependencies.key?(:author)

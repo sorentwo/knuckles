@@ -5,11 +5,12 @@ class SerializerFilterTest < Minitest::Test
 
   def test_objects_are_wrapped_in_a_serializer
     serializer = Struct.new(:node)
-    context = { serializer: serializer }
-    output = Filter.call([Object.new], context)
+    node       = Knuckles::Node.new(Object.new)
+    output     = Filter.call([node], serializer: serializer)
 
     assert_equal 1, output.length
-    assert_instance_of serializer, output.first
+    assert_instance_of Knuckles::Node, output.first
+    assert_instance_of serializer, output.first.serializer
   end
 
   def test_serializer_required_in_context
