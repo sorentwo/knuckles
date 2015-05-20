@@ -19,7 +19,7 @@ class PipelineTest < Minitest::Test
     notifier = Minitest::Mock.new
 
     notifier.expect(:instrument, [],
-      ['knuckles.serialize_filter', { filter: 'downcase', context: {}}
+      ['knuckles.filter', { filter: 'downcase', context: {}}
     ])
 
     pipeline.notifications = notifier

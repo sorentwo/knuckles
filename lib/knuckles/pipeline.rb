@@ -24,7 +24,7 @@ module Knuckles
       filters.reduce(objects) do |object, filter|
         payload = { filter: filter.name, context: context }
 
-        instrument('knuckles.serialize_filter', payload) do
+        instrument('knuckles.filter', payload) do
           filter.call(object, context)
         end
       end
