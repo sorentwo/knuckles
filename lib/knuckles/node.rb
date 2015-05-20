@@ -3,10 +3,10 @@ module Knuckles
     attr_reader :object
     attr_accessor :serializer, :dependencies, :serialized
 
-    def initialize(object, serializer: nil, dependencies: nil, serialized: nil)
+    def initialize(object, serializer: nil, dependencies: {}, serialized: nil)
       @object       = object
       @serializer   = serializer
-      @dependencies = dependencies || {}
+      @dependencies = dependencies
       @serialized   = serialized
     end
 

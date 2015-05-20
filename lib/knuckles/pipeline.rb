@@ -1,5 +1,6 @@
 module Knuckles
   class Pipeline
+    autoload :CacheFilter,      'knuckles/pipeline/cache_filter'
     autoload :DependencyFilter, 'knuckles/pipeline/dependency_filter'
     autoload :NodeFilter,       'knuckles/pipeline/node_filter'
     autoload :SerializerFilter, 'knuckles/pipeline/serializer_filter'
