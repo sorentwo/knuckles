@@ -36,7 +36,9 @@ class NodeTest < Minitest::Test
     klass = Struct.new(:cache_key, :updated_at)
     obj   = klass.new('klass/123', Date.new)
     child = klass.new('child/456')
-    node  = Knuckles::Node.new(obj, dependencies: [child])
+    node  = Knuckles::Node.new(obj, dependencies: {
+      children: Set.new([child])
+    })
 
     assert_equal ['klass/123', 'child/456'], node.cache_key
   end
@@ -46,7 +48,9 @@ class NodeTest < Minitest::Test
     obj     = klass.new('klass/123', Date.new)
     child_a = klass.new('child/111', Date.new(2015, 5, 19))
     child_b = klass.new('child/222', Date.new(2015, 5, 20))
-    node    = Knuckles::Node.new(obj, dependencies: [child_a, child_b])
+    node    = Knuckles::Node.new(obj, dependencies: {
+      children: Set.new([child_a, child_b])
+    })
 
     assert_equal ['klass/123', 'child/222'], node.cache_key
   end

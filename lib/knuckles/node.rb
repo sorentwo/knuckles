@@ -6,7 +6,7 @@ module Knuckles
     def initialize(object, serializer: nil, dependencies: nil, serialized: nil)
       @object       = object
       @serializer   = serializer
-      @dependencies = dependencies || []
+      @dependencies = dependencies || {}
       @serialized   = serialized
     end
 
@@ -26,7 +26,10 @@ module Knuckles
 
     def dependency_cache_key
       if dependencies.any?
-        dependencies.max_by { |dep| dep.updated_at }.cache_key
+        dependencies
+          .flat_map { |_, set| set.to_a }
+          .max_by { |dep| dep.updated_at }
+          .cache_key
       end
     end
   end
