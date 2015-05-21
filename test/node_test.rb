@@ -18,6 +18,14 @@ class NodeTest < Minitest::Test
     assert_equal '',  node.serialized
   end
 
+  def test_cached_flag
+    node = Knuckles::Node.new(Object.new)
+    refute node.cached?
+
+    node.cached = true
+    assert node.cached?
+  end
+
   def test_cache_key_from_object
     obj   = Model.new('model/123/1234567')
     node  = Knuckles::Node.new(obj)

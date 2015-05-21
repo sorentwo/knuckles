@@ -10,6 +10,7 @@ module Knuckles
         values.each do |key, value|
           if node = mapping[key]
             node.serialized = value
+            node.cached = true
           end
         end
 

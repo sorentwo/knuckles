@@ -18,10 +18,7 @@ class CacheFilterTest < Minitest::Test
 
     output = filter.call
 
-    refute_nil output[0].serialized
-    assert_nil output[1].serialized
-    refute_nil output[2].serialized
-
     assert_equal ['{"thing":1}', nil, '{"thing":3}'], output.map(&:serialized)
+    assert_equal [true, false, true], output.map(&:cached?)
   end
 end

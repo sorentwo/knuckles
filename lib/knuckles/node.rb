@@ -1,6 +1,7 @@
 module Knuckles
   class Node
     attr_reader :object
+    attr_writer :cached
     attr_accessor :serializer, :dependencies, :serialized
 
     def initialize(object, serializer: nil, dependencies: {}, serialized: nil)
@@ -8,6 +9,10 @@ module Knuckles
       @serializer   = serializer
       @dependencies = dependencies
       @serialized   = serialized
+    end
+
+    def cached?
+      !!@cached
     end
 
     def cache_key
