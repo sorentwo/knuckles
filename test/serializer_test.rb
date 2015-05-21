@@ -37,4 +37,17 @@ class SerializerTest < Minitest::Test
 
     assert_equal({}, serializer.serialize)
   end
+
+  def test_to_json_stringifies_serialized_output
+    serializer = Class.new(Knuckles::Serializer) do
+      def self.attributes
+        %i[id title]
+      end
+    end
+
+    post = Post.new(100, "Knuckles")
+    json = serializer.new(post).to_json
+
+    assert_equal '{"id":100,"title":"Knuckles"}', json
+  end
 end
