@@ -1,5 +1,3 @@
-require 'json'
-
 module Knuckles
   class Serializer < SimpleDelegator
     attr_accessor :object
@@ -25,7 +23,7 @@ module Knuckles
     end
 
     def to_json
-      JSON.dump(as_json)
+      Knuckles.json.dump(as_json)
     end
 
     alias_method :serialize, :as_json
