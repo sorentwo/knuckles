@@ -8,7 +8,7 @@ class CacheFilterTest < Minitest::Test
     node_a = Knuckles::Node.new(Model.new('model/1'))
     node_b = Knuckles::Node.new(Model.new('model/2'))
     node_c = Knuckles::Node.new(Model.new('model/3'))
-    cache  = MemoryStore.new
+    cache  = ActiveSupport::Cache::MemoryStore.new
     filter = Filter.new([node_a, node_b, node_c])
 
     filter.cache = cache
