@@ -13,8 +13,6 @@ module Knuckles
         @result  = result
       end
 
-      alias_method :objects, :nodes
-
       def call
         raise NotImplementedError
       end

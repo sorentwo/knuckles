@@ -1,6 +1,8 @@
 module Knuckles
   class Pipeline
     class NodeFilter < Filter
+      alias_method :objects, :nodes
+
       def call
         serializer = context.fetch(:serializer)
 
