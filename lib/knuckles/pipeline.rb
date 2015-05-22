@@ -1,9 +1,9 @@
 module Knuckles
   class Pipeline
-    autoload :CacheFilter,      'knuckles/pipeline/cache_filter'
-    autoload :DependencyFilter, 'knuckles/pipeline/dependency_filter'
-    autoload :NodeFilter,       'knuckles/pipeline/node_filter'
-    autoload :SerializeFilter,  'knuckles/pipeline/serialize_filter'
+    autoload :CacheFilter,     'knuckles/pipeline/cache_filter'
+    autoload :ChildrenFilter,  'knuckles/pipeline/children_filter'
+    autoload :NodeFilter,      'knuckles/pipeline/node_filter'
+    autoload :SerializeFilter, 'knuckles/pipeline/serialize_filter'
 
     def self.notifications
       if Object.const_defined?('ActiveSupport::Notifications')

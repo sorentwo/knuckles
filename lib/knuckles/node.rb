@@ -2,13 +2,19 @@ module Knuckles
   class Node
     attr_reader :object
     attr_writer :cached
-    attr_accessor :serializer, :dependencies, :serialized
+    attr_accessor :children, :parent, :serializer, :serialized
 
-    def initialize(object, serializer: nil, dependencies: {}, serialized: nil)
-      @object       = object
-      @serializer   = serializer
-      @dependencies = dependencies
-      @serialized   = serialized
+    def initialize(object,
+                   children: [],
+                   parent: nil,
+                   serializer: nil,
+                   serialized: nil)
+
+      @object     = object
+      @children   = children
+      @parent     = parent
+      @serialized = serialized
+      @serializer = serializer
     end
 
     def cached?
@@ -16,7 +22,7 @@ module Knuckles
     end
 
     def cache_key
-      [serializer_cache_key, dependency_cache_key].compact
+      [serializer_cache_key, child_cache_key].compact
     end
 
     private
@@ -29,12 +35,9 @@ module Knuckles
       end
     end
 
-    def dependency_cache_key
-      if dependencies.any?
-        dependencies
-          .flat_map { |_, set| set.to_a }
-          .max_by { |dep| dep.updated_at }
-          .cache_key
+    def child_cache_key
+      if children.any?
+        children.map(&:object).max_by(&:updated_at).cache_key
       end
     end
   end
