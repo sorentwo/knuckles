@@ -23,9 +23,7 @@ module Knuckles
     end
 
     def as_json
-      self.class.attributes.each_with_object({}) do |prop, memo|
-        memo[prop] = public_send(prop)
-      end
+      serialized_attributes.merge(includes_attributes)
     end
 
     def to_json
@@ -33,7 +31,7 @@ module Knuckles
     end
 
     def cache_key
-      [object_cache_key, child_cache_key].compact
+      [object.cache_key, child_cache_key].compact
     end
 
     def cached?
@@ -42,14 +40,29 @@ module Knuckles
 
     private
 
-    def object_cache_key
-      object.cache_key
-    end
-
     def child_cache_key
       if children.any?
         children.max_by(&:updated_at).cache_key
       end
+    end
+
+    def includes_attributes
+      self.class.includes.each_with_object({}) do |(key, _), memo|
+        included    = public_send(key)
+        include_ids = included.is_a?(Array) ? included.map(&:id) : included.id
+
+        memo[include_key(key)] = include_ids
+      end
+    end
+
+    def serialized_attributes
+      self.class.attributes.each_with_object({}) do |prop, memo|
+        memo[prop] = public_send(prop)
+      end
+    end
+
+    def include_key(key)
+      "#{key.to_s.sub(/s$/, '')}_ids".to_sym
     end
   end
 end

@@ -1,16 +1,15 @@
 module Knuckles
   class Pipeline
     class Filter
-      def self.call(nodes, context = nil, result = nil)
-        new(nodes, context, result).call
+      def self.call(nodes, context = {})
+        new(nodes, context).call
       end
 
-      attr_reader :nodes, :context, :result
+      attr_reader :nodes, :context
 
-      def initialize(nodes, context = nil, result = nil)
+      def initialize(nodes, context = {})
         @nodes   = nodes
         @context = context
-        @result  = result
       end
 
       def call

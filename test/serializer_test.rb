@@ -2,7 +2,7 @@ require "test_helper"
 
 class SerializerTest < Minitest::Test
   Serializer = Knuckles::Serializer
-  Model      = Struct.new(:cache_key, :updated_at)
+  Model      = Struct.new(:id, :cache_key, :updated_at)
 
   def test_initializing_accessors
     object   = Object.new
@@ -57,6 +57,24 @@ class SerializerTest < Minitest::Test
     assert_equal({}, serializer.as_json)
   end
 
+  def test_serializing_child_ids
+    serializer = Class.new(Serializer) do
+      def self.includes
+        { comments: Serializer }
+      end
+
+      def comments
+        [Model.new(111), Model.new(222)]
+      end
+    end
+
+    instance = serializer.new(Model.new)
+
+    assert_equal({
+      comment_ids: [111, 222]
+    }, instance.as_json)
+  end
+
   def test_to_json_stringifies_serialized_output
     serializer = Class.new(Serializer) do
       def self.attributes
@@ -71,24 +89,24 @@ class SerializerTest < Minitest::Test
   end
 
   def test_cache_key_from_object
-    object   = Model.new('model/123/1234567')
+    object   = Model.new(123, 'model/123/1234567')
     instance = Serializer.new(object)
 
     assert_equal ['model/123/1234567'], instance.cache_key
   end
 
   def test_cache_key_with_a_child
-    object   = Model.new("model/123", Date.new)
-    child    = Model.new("child/456")
+    object   = Model.new(123, "model/123", Date.new)
+    child    = Model.new(456, "child/456")
     instance = Serializer.new(object, children: [child])
 
     assert_equal ["model/123", "child/456"], instance.cache_key
   end
 
   def test_cache_key_with_children
-    object   = Model.new("model/123", Date.new)
-    child_a  = Model.new("child/111", Date.new(2015, 5, 19))
-    child_b  = Model.new("child/222", Date.new(2015, 5, 20))
+    object   = Model.new(123, "model/123", Date.new)
+    child_a  = Model.new(111, "child/111", Date.new(2015, 5, 19))
+    child_b  = Model.new(222, "child/222", Date.new(2015, 5, 20))
     instance = Serializer.new(object, children: [child_a, child_b])
 
     assert_equal ["model/123", "child/222"], instance.cache_key
