@@ -18,7 +18,7 @@ class ChildrenFilterTest < Minitest::Test
     end
   end
 
-  def test_extracting_dependencies
+  def test_extracting_children
     author     = Author.new(1, "Alasdair")
     comment    = Comment.new(1, "Yay", author)
     post       = Post.new(1, "More", author, [comment])

@@ -17,6 +17,7 @@ module Knuckles
       def build_children(node)
         serializer = node.serializer
 
+        # TODO: Bug with wrapping an empty list (comments)
         serializer.class.includes.flat_map do |key, klass|
           if child = serializer.public_send(key)
             build_node(node, child, klass)
