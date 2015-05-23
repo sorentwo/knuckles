@@ -1,21 +1,40 @@
 require "test_helper"
 
 class SerializerTest < Minitest::Test
+  Serializer = Knuckles::Serializer
+  Model      = Struct.new(:cache_key, :updated_at)
+
+  def test_initializing_accessors
+    object   = Object.new
+    instance = Serializer.new(object, children: [])
+
+    assert_equal object, instance.object
+    assert_equal [],     instance.children
+  end
+
+  def test_cached_predicate
+    instance = Serializer.new(Object.new)
+    refute instance.cached?
+
+    instance.serialized = '{}'
+    assert instance.cached?
+  end
+
   def test_serializing_an_object
-    serializer = Class.new(Knuckles::Serializer) do
+    serializer = Class.new(Serializer) do
       def self.attributes
         %i[id title]
       end
     end
 
     post = Post.new(100, "Knuckles")
-    serialized = serializer.new(post).serialize
+    serialized = serializer.new(post).as_json
 
     assert_equal({ id: 100, title: "Knuckles" }, serialized)
   end
 
   def test_overriding_properties
-    serializer = Class.new(Knuckles::Serializer) do
+    serializer = Class.new(Serializer) do
       def self.attributes
         %i[id title]
       end
@@ -26,20 +45,20 @@ class SerializerTest < Minitest::Test
     end
 
     post = Post.new(100, "KNUCKLES")
-    serialized = serializer.new(post).serialize
+    serialized = serializer.new(post).as_json
 
     assert_equal "Knuckles", serialized[:title]
   end
 
   def test_serializing_without_attributes
     post = Post.new(100, "Knuckles")
-    serializer = Knuckles::Serializer.new(post)
+    serializer = Serializer.new(post)
 
-    assert_equal({}, serializer.serialize)
+    assert_equal({}, serializer.as_json)
   end
 
   def test_to_json_stringifies_serialized_output
-    serializer = Class.new(Knuckles::Serializer) do
+    serializer = Class.new(Serializer) do
       def self.attributes
         %i[id title]
       end
@@ -49,5 +68,29 @@ class SerializerTest < Minitest::Test
     json = serializer.new(post).to_json
 
     assert_equal '{"id":100,"title":"Knuckles"}', json
+  end
+
+  def test_cache_key_from_object
+    object   = Model.new('model/123/1234567')
+    instance = Serializer.new(object)
+
+    assert_equal ['model/123/1234567'], instance.cache_key
+  end
+
+  def test_cache_key_with_a_child
+    object   = Model.new("model/123", Date.new)
+    child    = Model.new("child/456")
+    instance = Serializer.new(object, children: [child])
+
+    assert_equal ["model/123", "child/456"], instance.cache_key
+  end
+
+  def test_cache_key_with_children
+    object   = Model.new("model/123", Date.new)
+    child_a  = Model.new("child/111", Date.new(2015, 5, 19))
+    child_b  = Model.new("child/222", Date.new(2015, 5, 20))
+    instance = Serializer.new(object, children: [child_a, child_b])
+
+    assert_equal ["model/123", "child/222"], instance.cache_key
   end
 end

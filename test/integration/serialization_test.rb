@@ -1,24 +1,6 @@
 require "test_helper"
 
 class SerializationTest < Minitest::Test
-  AuthSerializer = Class.new(Knuckles::Serializer) do
-    def name
-      name.capitalize
-    end
-  end
-
-  CommSerializer = Class.new(Knuckles::Serializer) do
-    def self.includes
-      { author: AuthSerializer }
-    end
-  end
-
-  PostSerializer = Class.new(Knuckles::Serializer) do
-    def self.includes
-      { comments: CommSerializer }
-    end
-  end
-
   # def test_serializing_without_caching
   #   pipeline = Knuckles::Pipeline.new [
   #     Knuckles::Pipeline::NodeFilter,
@@ -46,7 +28,7 @@ class SerializationTest < Minitest::Test
   private
 
   def author
-    @author ||= Author.new(1, "YUKIHIRO")
+    @author ||= Author.new(1, "Yukihiro")
   end
 
   def comments

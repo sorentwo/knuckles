@@ -2,13 +2,13 @@ require "test_helper"
 
 class BuildFilterTest < Minitest::Test
   Filter = Knuckles::Pipeline::BuildFilter
-  Node   = Knuckles::Node
+  Serializer = Struct.new(:root, :serialized)
 
   def test_building_nodes_without_children
-    node_a = Node.new(nil, root: "posts", serialized: JSON.dump(id: 1, title: 'Sonic'))
-    node_b = Node.new(nil, root: "posts", serialized: JSON.dump(id: 2, title: 'Tails'))
+    inst_a = Serializer.new("posts", JSON.dump(id: 1, title: 'Sonic'))
+    inst_b = Serializer.new("posts", JSON.dump(id: 2, title: 'Tails'))
 
-    output = Filter.call([node_a, node_b], {})
+    output = Filter.call([inst_a, inst_b])
 
     assert_equal(JSON.dump({
       posts: [
@@ -19,12 +19,12 @@ class BuildFilterTest < Minitest::Test
   end
 
   def test_building_nodes_with_different_roots
-    node_a = Node.new(nil, root: "posts",    serialized: JSON.dump(id: 1, title: "Sonic"))
-    node_b = Node.new(nil, root: "posts",    serialized: JSON.dump(id: 2, title: "Tails"))
-    node_c = Node.new(nil, root: "comments", serialized: JSON.dump(id: 1, body: "Sunny Meadow"))
-    node_d = Node.new(nil, root: "authors",  serialized: JSON.dump(id: 1, name: "Yoshi"))
+    inst_a = Serializer.new("posts",    JSON.dump(id: 1, title: "Sonic"))
+    inst_b = Serializer.new("posts",    JSON.dump(id: 2, title: "Tails"))
+    inst_c = Serializer.new("comments", JSON.dump(id: 1, body: "Sunny Meadow"))
+    inst_d = Serializer.new("authors",  JSON.dump(id: 1, name: "Yoshi"))
 
-    output = Filter.call([node_a, node_b, node_c, node_d])
+    output = Filter.call([inst_a, inst_b, inst_c, inst_d])
 
     assert_equal(JSON.dump({
       posts: [

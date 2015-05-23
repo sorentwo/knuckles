@@ -1,15 +1,16 @@
 require "test_helper"
 
 class CacheFilterTest < Minitest::Test
-  Filter = Knuckles::Pipeline::CacheFilter
-  Model  = Struct.new(:cache_key)
+  Filter     = Knuckles::Pipeline::CacheFilter
+  Model      = Struct.new(:cache_key)
+  Serializer = Knuckles::Serializer
 
   def test_serialized_values_inserted_when_cached
-    node_a = Knuckles::Node.new(Model.new('model/1'))
-    node_b = Knuckles::Node.new(Model.new('model/2'))
-    node_c = Knuckles::Node.new(Model.new('model/3'))
+    inst_a = Serializer.new(Model.new('model/1'))
+    inst_b = Serializer.new(Model.new('model/2'))
+    inst_c = Serializer.new(Model.new('model/3'))
     cache  = ActiveSupport::Cache::MemoryStore.new
-    filter = Filter.new([node_a, node_b, node_c])
+    filter = Filter.new([inst_a, inst_b, inst_c])
 
     filter.cache = cache
 

@@ -1,6 +1,10 @@
 module Knuckles
   class Serializer < SimpleDelegator
-    attr_accessor :object
+    attr_accessor :object, :children, :serialized
+
+    def self.root
+      nil
+    end
 
     def self.includes
       {}
@@ -10,10 +14,12 @@ module Knuckles
       []
     end
 
-    def initialize(object)
-      super
+    def initialize(object, children: [], serialized: nil)
+      super(object)
 
-      @object = object
+      @object     = object
+      @children   = children
+      @serialized = serialized
     end
 
     def as_json
@@ -26,6 +32,24 @@ module Knuckles
       Knuckles.json.dump(as_json)
     end
 
-    alias_method :serialize, :as_json
+    def cache_key
+      [object_cache_key, child_cache_key].compact
+    end
+
+    def cached?
+      !!serialized
+    end
+
+    private
+
+    def object_cache_key
+      object.cache_key
+    end
+
+    def child_cache_key
+      if children.any?
+        children.max_by(&:updated_at).cache_key
+      end
+    end
   end
 end

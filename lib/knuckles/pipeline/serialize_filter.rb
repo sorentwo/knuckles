@@ -4,7 +4,7 @@ module Knuckles
       def call
         nodes.each do |node|
           unless node.serialized
-            node.serialized = node.serializer.to_json
+            node.serialized = node.to_json
           end
         end
       end

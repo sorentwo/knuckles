@@ -16,14 +16,12 @@ module Knuckles
 
       private
 
-      def build_children(node)
-        serializer = node.serializer
-
+      def build_children(serializer)
         serializer.class.includes.flat_map do |key, klass|
           children = serializer.public_send(key)
 
           [children].flatten.compact.map do |child|
-            Node.new(child, serializer: klass.new(child))
+            klass.new(child)
           end
         end
       end

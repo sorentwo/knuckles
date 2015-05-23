@@ -3,8 +3,8 @@ module Knuckles
     autoload :BuildFilter,     "knuckles/pipeline/build_filter"
     autoload :CacheFilter,     "knuckles/pipeline/cache_filter"
     autoload :ChildrenFilter,  "knuckles/pipeline/children_filter"
-    autoload :NodeFilter,      "knuckles/pipeline/node_filter"
     autoload :SerializeFilter, "knuckles/pipeline/serialize_filter"
+    autoload :WrapFilter,      "knuckles/pipeline/wrap_filter"
 
     def self.notifications
       if Object.const_defined?('ActiveSupport::Notifications')

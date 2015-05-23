@@ -9,12 +9,11 @@ class SerializeFilterTest < Minitest::Test
     end
   end
 
-  def test_nodes_are_serialized
+  def test_serialization_is_stored
     post       = Post.new(1, "More")
     serializer = PostSerializer.new(post)
-    node       = Knuckles::Node.new(post, serializer: serializer)
 
-    output, _ = Filter.call([node])
+    output, _ = Filter.call([serializer])
 
     refute_nil output.serialized
     assert_equal '{"id":1,"title":"More"}', output.serialized
@@ -22,10 +21,9 @@ class SerializeFilterTest < Minitest::Test
 
   def test_serialized_values_are_not_overwritten
     post       = Post.new(1, "Updated")
-    serializer = PostSerializer.new(post)
-    node       = Knuckles::Node.new(post, serialized: '{}', serializer: serializer)
+    serializer = PostSerializer.new(post, serialized: '{}')
 
-    output, _ = Filter.call([node])
+    output, _ = Filter.call([serializer])
 
     assert_equal '{}', output.serialized
   end

@@ -1,6 +1,5 @@
 require "json"
 
-require "knuckles/node"
 require "knuckles/notifications"
 require "knuckles/pipeline/filter"
 require "knuckles/pipeline"
