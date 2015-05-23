@@ -2,11 +2,12 @@ module Knuckles
   class Node
     attr_reader :object
     attr_writer :cached
-    attr_accessor :children, :parent, :serializer, :serialized
+    attr_accessor :children, :parent, :root, :serializer, :serialized
 
     def initialize(object,
                    children: [],
                    parent: nil,
+                   root: nil,
                    serializer: nil,
                    serialized: nil)
 
@@ -15,6 +16,7 @@ module Knuckles
       @parent     = parent
       @serialized = serialized
       @serializer = serializer
+      @root       = root
     end
 
     def cached?

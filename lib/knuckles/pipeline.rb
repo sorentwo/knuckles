@@ -1,5 +1,6 @@
 module Knuckles
   class Pipeline
+    autoload :BuildFilter,     'knuckles/pipeline/build_filter'
     autoload :CacheFilter,     'knuckles/pipeline/cache_filter'
     autoload :ChildrenFilter,  'knuckles/pipeline/children_filter'
     autoload :NodeFilter,      'knuckles/pipeline/node_filter'
