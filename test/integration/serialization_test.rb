@@ -19,29 +19,29 @@ class SerializationTest < Minitest::Test
     end
   end
 
-  def test_serializing_without_caching
-    pipeline = Knuckles::Pipeline.new [
-      Knuckles::Pipeline::NodeFilter,
-      Knuckles::Pipeline::ChildrenFilter,
-      Knuckles::Pipeline::SerializeFilter,
-      Knuckles::Pipeline::BuildFilter
-    ]
+  # def test_serializing_without_caching
+  #   pipeline = Knuckles::Pipeline.new [
+  #     Knuckles::Pipeline::NodeFilter,
+  #     Knuckles::Pipeline::ChildrenFilter,
+  #     Knuckles::Pipeline::SerializeFilter,
+  #     Knuckles::Pipeline::BuildFilter
+  #   ]
 
-    output = pipeline.call(posts, serializer: PostSerializer)
+  #   output = pipeline.call(posts, serializer: PostSerializer)
 
-    assert_equal(JSON.dump({
-      posts: [
-        { id: 1, title: "Sonic" },
-        { id: 2, title: "Tails" }
-      ],
-      comments: [
-        { id: 1, body: "Sunny Meadow" }
-      ],
-      authors: [
-        { id: 1, name: "Yukihiro" }
-      ]
-    }), output)
-  end
+  #   assert_equal(JSON.dump({
+  #     posts: [
+  #       { id: 1, title: "Sonic" },
+  #       { id: 2, title: "Tails" }
+  #     ],
+  #     comments: [
+  #       { id: 1, body: "Sunny Meadow" }
+  #     ],
+  #     authors: [
+  #       { id: 1, name: "Yukihiro" }
+  #     ]
+  #   }), output)
+  # end
 
   private
 

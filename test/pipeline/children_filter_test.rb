@@ -25,14 +25,12 @@ class ChildrenFilterTest < Minitest::Test
     serializer = PostSerializer.new(post)
     node       = Node.new(post, serializer: serializer)
 
-    output, _ = Filter.call([node])
-    child, _  = output.children
+    output = Filter.call([node])
 
-    assert_equal 1, output.children.length
-    assert_equal output, child.parent
-    assert_instance_of CommSerializer, child.serializer
-
-    assert_equal 1, child.children.length
-    assert_equal child, child.children.first.parent
+    assert_equal 3, output.length
+    assert_equal [1, 1, 0],
+      output.map { |out| out.children.length }
+    assert_equal [PostSerializer, CommSerializer, AuthSerializer],
+      output.map { |out| out.serializer.class }
   end
 end

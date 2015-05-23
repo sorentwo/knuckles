@@ -7,10 +7,8 @@ class NodeTest < Minitest::Test
   def test_initializing_accessors
     object = Object.new
     serial = Object.new
-    parent = Object.new
     node   = Node.new(object,
       children: [],
-      parent: parent,
       serializer: serial,
       serialized: ''
     )
@@ -19,7 +17,6 @@ class NodeTest < Minitest::Test
     assert_equal serial, node.serializer
     assert_equal [],     node.children
     assert_equal '',     node.serialized
-    assert_equal parent, node.parent
   end
 
   def test_cached_flag

@@ -2,14 +2,16 @@ module Knuckles
   class Pipeline
     class ChildrenFilter < Filter
       def call
-        parents = nodes.dup
+        array = nodes
+        index = 0
 
-        while node = parents.shift
+        while node = array[index]
           node.children = build_children(node)
-          parents += node.children
+          array += node.children
+          index += 1
         end
 
-        nodes
+        array
       end
 
       private
@@ -17,19 +19,12 @@ module Knuckles
       def build_children(node)
         serializer = node.serializer
 
-        # TODO: Bug with wrapping an empty list (comments)
         serializer.class.includes.flat_map do |key, klass|
-          if child = serializer.public_send(key)
-            build_node(node, child, klass)
-          end
-        end.compact
-      end
+          children = serializer.public_send(key)
 
-      def build_node(parent, child, serializer)
-        if child.is_a?(Array)
-          child.map { |rel| build_node(parent, rel, serializer) }
-        else
-          Node.new(child, parent: parent, serializer: serializer.new(child))
+          [children].flatten.compact.map do |child|
+            Node.new(child, serializer: klass.new(child))
+          end
         end
       end
     end
