@@ -2,9 +2,12 @@ module Knuckles
   class Serializer < SimpleDelegator
     attr_accessor :object, :children, :serialized
 
-    def self.root(root = nil)
-      @root = root if root
-      @root
+    def self.root(root)
+      @_root = root
+    end
+
+    def self._root
+      @_root
     end
 
     def self.attributes(*attributes)
@@ -27,8 +30,12 @@ module Knuckles
       @serialized = serialized
     end
 
+    def attributes
+      self.class._attributes
+    end
+
     def root
-      self.class.root
+      self.class._root
     end
 
     def as_json

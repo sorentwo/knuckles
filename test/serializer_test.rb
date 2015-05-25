@@ -25,7 +25,6 @@ class SerializerTest < Minitest::Test
       root :things
     end
 
-    assert_equal :things, klass.root
     assert_equal :things, klass.new(nil).root
   end
 
@@ -37,7 +36,7 @@ class SerializerTest < Minitest::Test
     model    = Struct.new(:id, :name, :date).new(1, 'hi', Date.new)
     instance = klass.new(model)
 
-    assert_equal %i[id name date], klass._attributes
+    assert_equal %i[id name date], instance.attributes
     assert_equal model.id,   instance.id
     assert_equal model.name, instance.name
     assert_equal model.date, instance.date
