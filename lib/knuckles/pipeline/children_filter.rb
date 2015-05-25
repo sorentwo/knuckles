@@ -17,12 +17,8 @@ module Knuckles
       private
 
       def build_children(serializer)
-        serializer.class.includes.flat_map do |key, klass|
-          children = serializer.public_send(key)
-
-          [children].flatten.compact.map do |child|
-            klass.new(child)
-          end
+        serializer.relations.flat_map do |relation|
+          relation.serializables(serializer)
         end
       end
     end

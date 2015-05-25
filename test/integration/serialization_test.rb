@@ -17,8 +17,8 @@ class SerializationTest < Minitest::Test
         { id: 2, title: "Tails", comment_ids: [] }
       ],
       comments: [
-        { id: 1, body: "Sunny Meadow", author_ids: 1 },
-        { id: 2, body: "Mecha Zone", author_ids: 1 }
+        { id: 1, body: "Sunny Meadow", author_id: 1 },
+        { id: 2, body: "Mecha Zone", author_id: 1 }
       ],
       authors: [
         { id: 1, name: "Yukihiro" }

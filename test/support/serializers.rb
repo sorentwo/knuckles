@@ -9,9 +9,7 @@ CommentSerializer = Class.new(Knuckles::Serializer) do
 
   attributes :id, :body
 
-  def self.includes
-    { author: AuthorSerializer }
-  end
+  has_one :author, serializer: AuthorSerializer
 end
 
 PostSerializer = Class.new(Knuckles::Serializer) do
@@ -19,7 +17,5 @@ PostSerializer = Class.new(Knuckles::Serializer) do
 
   attributes :id, :title
 
-  def self.includes
-    { comments: CommentSerializer }
-  end
+  has_many :comments, serializer: CommentSerializer
 end

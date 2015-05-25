@@ -18,8 +18,18 @@ module Knuckles
       @_attributes ||= []
     end
 
-    def self.includes
-      {}
+    def self.has_one(relation, serializer:)
+      @_relations ||= []
+      @_relations << Knuckles::Relation::HasOne.new(relation, serializer)
+    end
+
+    def self.has_many(relation, serializer:)
+      @_relations ||= []
+      @_relations << Knuckles::Relation::HasMany.new(relation, serializer)
+    end
+
+    def self._relations
+      @_relations || []
     end
 
     def initialize(object, children: [], serialized: nil)
@@ -34,12 +44,16 @@ module Knuckles
       self.class._attributes
     end
 
+    def relations
+      self.class._relations
+    end
+
     def root
       self.class._root
     end
 
     def as_json
-      serialized_attributes.merge(includes_attributes)
+      serialized_attributes.merge(relation_attributes)
     end
 
     def to_json
@@ -62,23 +76,16 @@ module Knuckles
       end
     end
 
-    def includes_attributes
-      self.class.includes.each_with_object({}) do |(key, _), memo|
-        included    = public_send(key)
-        include_ids = included.is_a?(Array) ? included.map(&:id) : included.id
-
-        memo[include_key(key)] = include_ids
+    def relation_attributes
+      relations.each_with_object({}) do |relation, memo|
+        memo[relation.attribute_key] = relation.ids(self)
       end
     end
 
     def serialized_attributes
-      self.class._attributes.each_with_object({}) do |prop, memo|
+      attributes.each_with_object({}) do |prop, memo|
         memo[prop] = public_send(prop)
       end
-    end
-
-    def include_key(key)
-      "#{key.to_s.sub(/s$/, '')}_ids".to_sym
     end
   end
 end

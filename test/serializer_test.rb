@@ -42,6 +42,13 @@ class SerializerTest < Minitest::Test
     assert_equal model.date, instance.date
   end
 
+  def test_defining_relations
+    klass = Class.new(Serializer) do
+      has_one  :author,   serializer: Serializer
+      has_many :comments, serializer: Serializer
+    end
+  end
+
   def test_serializing_an_object
     serializer = Class.new(Serializer) do
       attributes :id, :title
@@ -77,8 +84,11 @@ class SerializerTest < Minitest::Test
 
   def test_serializing_child_ids
     serializer = Class.new(Serializer) do
-      def self.includes
-        { comments: Serializer }
+      has_one  :author,   serializer: Serializer
+      has_many :comments, serializer: Serializer
+
+      def author
+        Model.new(333)
       end
 
       def comments
@@ -89,6 +99,7 @@ class SerializerTest < Minitest::Test
     instance = serializer.new(Model.new)
 
     assert_equal({
+      author_id: 333,
       comment_ids: [111, 222]
     }, instance.as_json)
   end

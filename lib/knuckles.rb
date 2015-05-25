@@ -3,6 +3,7 @@ require "json"
 require "knuckles/notifications"
 require "knuckles/pipeline/filter"
 require "knuckles/pipeline"
+require "knuckles/relation"
 require "knuckles/serializer"
 require "knuckles/version"
 
