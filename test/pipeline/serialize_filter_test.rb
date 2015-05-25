@@ -4,9 +4,7 @@ class SerializeFilterTest < Minitest::Test
   Filter = Knuckles::Pipeline::SerializeFilter
 
   PostSerializer = Class.new(Knuckles::Serializer) do
-    def self.attributes
-      %i[id title]
-    end
+    attributes :id, :title
   end
 
   def test_serialization_is_stored

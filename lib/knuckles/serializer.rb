@@ -7,12 +7,16 @@ module Knuckles
       @root
     end
 
-    def self.includes
-      {}
+    def self.attributes(*attributes)
+      @_attributes = attributes
     end
 
-    def self.attributes
-      []
+    def self._attributes
+      @_attributes ||= []
+    end
+
+    def self.includes
+      {}
     end
 
     def initialize(object, children: [], serialized: nil)
@@ -61,7 +65,7 @@ module Knuckles
     end
 
     def serialized_attributes
-      self.class.attributes.each_with_object({}) do |prop, memo|
+      self.class._attributes.each_with_object({}) do |prop, memo|
         memo[prop] = public_send(prop)
       end
     end

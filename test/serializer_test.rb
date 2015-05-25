@@ -29,11 +29,23 @@ class SerializerTest < Minitest::Test
     assert_equal :things, klass.new(nil).root
   end
 
+  def test_defining_attributes
+    klass = Class.new(Serializer) do
+      attributes :id, :name, :date
+    end
+
+    model    = Struct.new(:id, :name, :date).new(1, 'hi', Date.new)
+    instance = klass.new(model)
+
+    assert_equal %i[id name date], klass._attributes
+    assert_equal model.id,   instance.id
+    assert_equal model.name, instance.name
+    assert_equal model.date, instance.date
+  end
+
   def test_serializing_an_object
     serializer = Class.new(Serializer) do
-      def self.attributes
-        %i[id title]
-      end
+      attributes :id, :title
     end
 
     post = Post.new(100, "Knuckles")
@@ -44,9 +56,7 @@ class SerializerTest < Minitest::Test
 
   def test_overriding_properties
     serializer = Class.new(Serializer) do
-      def self.attributes
-        %i[id title]
-      end
+      attributes :id, :title
 
       def title
         object.title.capitalize
@@ -86,9 +96,7 @@ class SerializerTest < Minitest::Test
 
   def test_to_json_stringifies_serialized_output
     serializer = Class.new(Serializer) do
-      def self.attributes
-        %i[id title]
-      end
+      attributes :id, :title
     end
 
     post = Post.new(100, "Knuckles")
