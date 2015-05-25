@@ -8,17 +8,17 @@ module Knuckles
         @serializer = serializer
       end
 
-      def ids(object)
-        associated(object).map(&:id)
+      def ids(parent)
+        associated(parent).map(&:id)
       end
 
-      def associated(object)
-        object.public_send(key)
+      def associated(parent)
+        parent.public_send(key)
       end
 
-      def serializables(object)
-        associated(object).map do |associate|
-          serializer.new(associate)
+      def serializables(parent)
+        associated(parent).map do |associate|
+          serializer.new(associate, parent.options)
         end
       end
 

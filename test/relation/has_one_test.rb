@@ -27,10 +27,14 @@ class HasOneTest < Minitest::Test
 
   def test_serializables_wraps_associated
     author   = Object.new
-    model    = Struct.new(:author).new(author)
+    options  = Hash.new
     relation = HasOne.new(:author, Knuckles::Serializer)
+    model    = Struct.new(:author, :options).new(author, options)
 
-    assert_instance_of Knuckles::Serializer,
-      relation.serializables(model)
+    serializable = relation.serializables(model)
+
+    assert_instance_of Knuckles::Serializer, serializable
+    assert_equal author, serializable.object
+    assert_equal options, serializable.options
   end
 end

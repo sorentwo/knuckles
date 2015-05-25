@@ -6,10 +6,21 @@ class SerializerTest < Minitest::Test
 
   def test_initializing_accessors
     object   = Object.new
-    instance = Serializer.new(object, children: [])
+    scope    = Object.new
+    instance = Serializer.new(object, scope: scope, children: [])
 
     assert_equal object, instance.object
     assert_equal [],     instance.children
+    assert_equal scope,  instance.scope
+  end
+
+  def test_options_are_retained
+    instance = Serializer.new(Object.new, unknown: true, option: false)
+
+    assert_equal({
+      unknown: true,
+      option: false
+    }, instance.options)
   end
 
   def test_cached_predicate

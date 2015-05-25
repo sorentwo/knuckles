@@ -3,9 +3,7 @@ module Knuckles
     class SerializeFilter < Filter
       def call
         nodes.each do |node|
-          unless node.serialized
-            node.serialized = node.to_json
-          end
+          node.serialized = node.to_json unless node.cached?
         end
       end
     end

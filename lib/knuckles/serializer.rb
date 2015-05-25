@@ -1,7 +1,5 @@
 module Knuckles
   class Serializer < SimpleDelegator
-    attr_accessor :object, :children, :serialized
-
     class << self
       attr_reader :_root, :_attributes, :_relations
 
@@ -26,12 +24,15 @@ module Knuckles
       end
     end
 
-    def initialize(object, children: [], serialized: nil)
+    attr_accessor :object, :options, :children, :scope, :serialized
+
+    def initialize(object, options = {})
       super(object)
 
-      @object     = object
-      @children   = children
-      @serialized = serialized
+      @object   = object
+      @options  = options
+      @children = options.fetch(:children, [])
+      @scope    = options.fetch(:scope, nil)
     end
 
     def attributes

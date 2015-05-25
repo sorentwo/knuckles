@@ -30,12 +30,15 @@ class HasManyTest < Minitest::Test
   def test_serializables_wraps_each_associated
     comment_a = Comment.new(44)
     comment_b = Comment.new(55)
-    model     = Struct.new(:comments).new([comment_a, comment_b])
+    options   = Hash.new
+    model     = Struct.new(:comments, :options).new([comment_a, comment_b], options)
     relation  = HasMany.new(:comments, Knuckles::Serializer)
 
     serializables = relation.serializables(model)
 
     assert_equal 2, serializables.length
     assert_instance_of Knuckles::Serializer, serializables.first
+    assert_equal comment_a, serializables.first.object
+    assert_equal options, serializables.first.options
   end
 end

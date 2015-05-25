@@ -8,16 +8,16 @@ module Knuckles
         @serializer = serializer
       end
 
-      def ids(object)
-        associated(object).id
+      def ids(parent)
+        associated(parent).id
       end
 
-      def associated(object)
-        object.public_send(key)
+      def associated(parent)
+        parent.public_send(key)
       end
 
-      def serializables(object)
-        serializer.new(associated(object))
+      def serializables(parent)
+        serializer.new(associated(parent), parent.options)
       end
 
       def attribute_key

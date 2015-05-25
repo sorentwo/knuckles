@@ -14,8 +14,8 @@ class CacheFilterTest < Minitest::Test
 
     filter.cache = cache
 
-    cache.write('model/1', '{"thing":1}')
-    cache.write('model/3', '{"thing":3}')
+    cache.write("model/1", '{"thing":1}')
+    cache.write("model/3", '{"thing":3}')
 
     output = filter.call
 
