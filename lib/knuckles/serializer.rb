@@ -2,34 +2,28 @@ module Knuckles
   class Serializer < SimpleDelegator
     attr_accessor :object, :children, :serialized
 
-    def self.root(root)
-      @_root = root
-    end
+    class << self
+      attr_reader :_root, :_attributes, :_relations
 
-    def self._root
-      @_root
-    end
+      def attributes(*attributes)
+        @_attributes = attributes
+      end
 
-    def self.attributes(*attributes)
-      @_attributes = attributes
-    end
+      def root(root)
+        @_root = root
+      end
 
-    def self._attributes
-      @_attributes ||= []
-    end
+      def has_one(relation, serializer:)
+        associate(Knuckles::Relation::HasOne.new(relation, serializer))
+      end
 
-    def self.has_one(relation, serializer:)
-      @_relations ||= []
-      @_relations << Knuckles::Relation::HasOne.new(relation, serializer)
-    end
+      def has_many(relation, serializer:)
+        associate(Knuckles::Relation::HasMany.new(relation, serializer))
+      end
 
-    def self.has_many(relation, serializer:)
-      @_relations ||= []
-      @_relations << Knuckles::Relation::HasMany.new(relation, serializer)
-    end
-
-    def self._relations
-      @_relations || []
+      def associate(relation)
+        (@_relations ||= []) << relation
+      end
     end
 
     def initialize(object, children: [], serialized: nil)
@@ -41,11 +35,11 @@ module Knuckles
     end
 
     def attributes
-      self.class._attributes
+      self.class._attributes || []
     end
 
     def relations
-      self.class._relations
+      self.class._relations || []
     end
 
     def root
