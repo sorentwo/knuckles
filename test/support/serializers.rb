@@ -1,7 +1,5 @@
 AuthorSerializer = Class.new(Knuckles::Serializer) do
-  def self.root
-    :authors
-  end
+  root :authors
 
   def self.attributes
     %i[id name]
@@ -9,9 +7,7 @@ AuthorSerializer = Class.new(Knuckles::Serializer) do
 end
 
 CommentSerializer = Class.new(Knuckles::Serializer) do
-  def self.root
-    :comments
-  end
+  root :comments
 
   def self.includes
     { author: AuthorSerializer }
@@ -23,9 +19,7 @@ CommentSerializer = Class.new(Knuckles::Serializer) do
 end
 
 PostSerializer = Class.new(Knuckles::Serializer) do
-  def self.root
-    :posts
-  end
+  root :posts
 
   def self.includes
     { comments: CommentSerializer }

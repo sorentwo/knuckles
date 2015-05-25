@@ -20,6 +20,15 @@ class SerializerTest < Minitest::Test
     assert instance.cached?
   end
 
+  def test_defining_a_root
+    klass = Class.new(Serializer) do
+      root :things
+    end
+
+    assert_equal :things, klass.root
+    assert_equal :things, klass.new(nil).root
+  end
+
   def test_serializing_an_object
     serializer = Class.new(Serializer) do
       def self.attributes

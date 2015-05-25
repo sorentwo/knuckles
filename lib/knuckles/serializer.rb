@@ -2,8 +2,9 @@ module Knuckles
   class Serializer < SimpleDelegator
     attr_accessor :object, :children, :serialized
 
-    def self.root
-      nil
+    def self.root(root = nil)
+      @root = root if root
+      @root
     end
 
     def self.includes
