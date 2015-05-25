@@ -1,8 +1,10 @@
+require 'set'
+
 module Knuckles
   class Pipeline
     class BuildFilter < Filter
       def call
-        output = nodes.each_with_object(array_backed_hash) do |node, memo|
+        output = nodes.each_with_object(set_backed_hash) do |node, memo|
           memo[node.root] << node.serialized
         end
 
@@ -11,8 +13,8 @@ module Knuckles
 
       private
 
-      def array_backed_hash
-        Hash.new { |hash, key| hash[key] = [] }
+      def set_backed_hash
+        Hash.new { |hash, key| hash[key] = Set.new }
       end
 
       def jsonify_hash(hash, buffer = "")
@@ -22,7 +24,7 @@ module Knuckles
 
         hash.each_with_index do |(key, value), index|
           buffer << "\"#{key}\":"
-          buffer << "[#{value.join(',')}]"
+          buffer << "[#{value.to_a.join(',')}]"
           buffer << "," if index < length
         end
 

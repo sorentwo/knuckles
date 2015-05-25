@@ -22,6 +22,10 @@ module Knuckles
       @serialized = serialized
     end
 
+    def root
+      self.class.root
+    end
+
     def as_json
       serialized_attributes.merge(includes_attributes)
     end
