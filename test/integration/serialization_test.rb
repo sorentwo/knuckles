@@ -1,6 +1,8 @@
 require "test_helper"
 
 class SerializationTest < Minitest::Test
+  parallelize_me!
+
   def test_serializing_without_caching
     pipeline = Knuckles::Pipeline.new [
       Knuckles::Pipeline::WrapFilter,

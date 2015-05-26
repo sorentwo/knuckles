@@ -1,6 +1,8 @@
 require "test_helper"
 
 class CacheFilterTest < Minitest::Test
+  parallelize_me!
+
   Filter     = Knuckles::Pipeline::CacheFilter
   Model      = Struct.new(:cache_key)
   Serializer = Knuckles::Serializer

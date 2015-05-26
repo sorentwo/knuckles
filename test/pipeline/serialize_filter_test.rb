@@ -1,6 +1,8 @@
 require "test_helper"
 
 class SerializeFilterTest < Minitest::Test
+  parallelize_me!
+
   Filter = Knuckles::Pipeline::SerializeFilter
 
   PostSerializer = Class.new(Knuckles::Serializer) do

@@ -1,6 +1,8 @@
 require "test_helper"
 
 class ChildrenFilterTest < Minitest::Test
+  parallelize_me!
+
   Filter = Knuckles::Pipeline::ChildrenFilter
 
   def test_extracting_children

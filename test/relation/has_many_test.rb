@@ -1,6 +1,8 @@
 require "test_helper"
 
 class HasManyTest < Minitest::Test
+  parallelize_me!
+
   HasMany = Knuckles::Relation::HasMany
 
   def test_extracted_id

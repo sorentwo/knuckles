@@ -1,6 +1,8 @@
 require "test_helper"
 
 class PipelineTest < Minitest::Test
+  parallelize_me!
+
   module Filter
     extend self
 

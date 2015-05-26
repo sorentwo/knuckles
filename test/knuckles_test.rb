@@ -1,6 +1,8 @@
 require "test_helper"
 
 class KnucklesTest < Minitest::Test
+  parallelize_me!
+
   def teardown
     Knuckles.reset!
   end

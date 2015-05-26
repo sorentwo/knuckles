@@ -1,6 +1,8 @@
 require "test_helper"
 
 class SerializerTest < Minitest::Test
+  parallelize_me!
+
   Serializer = Knuckles::Serializer
   Model      = Struct.new(:id, :cache_key, :updated_at)
 

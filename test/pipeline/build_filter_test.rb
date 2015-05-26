@@ -1,6 +1,8 @@
 require "test_helper"
 
 class BuildFilterTest < Minitest::Test
+  parallelize_me!
+
   Filter = Knuckles::Pipeline::BuildFilter
   Serializer = Struct.new(:root, :serialized)
 
