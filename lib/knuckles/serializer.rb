@@ -1,3 +1,5 @@
+require "delegate"
+
 module Knuckles
   class Serializer < SimpleDelegator
     class << self
