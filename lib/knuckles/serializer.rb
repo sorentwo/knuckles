@@ -36,7 +36,7 @@ module Knuckles
     end
 
     def attributes
-      self.class._attributes || []
+      filter(self.class._attributes || [])
     end
 
     def relations
@@ -45,6 +45,10 @@ module Knuckles
 
     def root
       self.class._root
+    end
+
+    def filter(keys)
+      keys
     end
 
     def as_json

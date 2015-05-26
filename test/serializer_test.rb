@@ -71,7 +71,7 @@ class SerializerTest < Minitest::Test
     assert_equal({ id: 100, title: "Knuckles" }, serialized)
   end
 
-  def test_overriding_properties
+  def test_overriding_attributes
     serializer = Class.new(Serializer) do
       attributes :id, :title
 
@@ -84,6 +84,23 @@ class SerializerTest < Minitest::Test
     serialized = serializer.new(post).as_json
 
     assert_equal "Knuckles", serialized[:title]
+  end
+
+  def test_filtering_serialized_attributes
+    serializer = Class.new(Serializer) do
+      attributes :id, :title
+
+      def filter(keys)
+        keys.delete :title unless scope.admin
+        keys
+      end
+    end
+
+    post     = Post.new(100, "Metal")
+    scope    = Struct.new(:admin).new(false)
+    instance = serializer.new(post, scope: scope)
+
+    assert_equal %i[id], instance.as_json.keys
   end
 
   def test_serializing_without_attributes
