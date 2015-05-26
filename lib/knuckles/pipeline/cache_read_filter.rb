@@ -1,13 +1,13 @@
 module Knuckles
   class Pipeline
-    class CacheFilter < Filter
+    class CacheReadFilter < Filter
       attr_accessor :cache
 
       def call
         mapping = cache_key_mapping
-        values  = cache.read_multi(*mapping.keys)
+        fetched  = cache.read_multi(*mapping.keys)
 
-        values.each do |key, value|
+        fetched.each do |key, value|
           if node = mapping[key]
             node.serialized = value
           end

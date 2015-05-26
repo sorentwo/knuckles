@@ -28,6 +28,9 @@ class SerializationTest < Minitest::Test
     }), output)
   end
 
+  def test_serializing_with_caching
+  end
+
   private
 
   def author

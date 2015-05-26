@@ -1,10 +1,17 @@
 module Knuckles
   class Pipeline
     autoload :BuildFilter,     "knuckles/pipeline/build_filter"
-    autoload :CacheFilter,     "knuckles/pipeline/cache_filter"
+    autoload :CacheReadFilter, "knuckles/pipeline/cache_read_filter"
     autoload :ChildrenFilter,  "knuckles/pipeline/children_filter"
     autoload :SerializeFilter, "knuckles/pipeline/serialize_filter"
     autoload :WrapFilter,      "knuckles/pipeline/wrap_filter"
+
+    def self.default_filters
+      [ WrapFilter,
+        ChildrenFilter,
+        SerializeFilter,
+        BuildFilter ]
+    end
 
     def self.notifications
       if Object.const_defined?('ActiveSupport::Notifications')
@@ -17,7 +24,7 @@ module Knuckles
     attr_reader :filters
     attr_accessor :notifications
 
-    def initialize(filters = [])
+    def initialize(filters = self.class.default_filters)
       @filters       = filters.freeze
       @notifications = self.class.notifications
     end
