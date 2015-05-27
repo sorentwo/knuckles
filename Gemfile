@@ -1,8 +1,8 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-# Specify your gem's dependencies in knuckles.gemspec
 gemspec
 
 group :benchmarking do
-  gem 'benchmark-ips'
+  gem "benchmark-ips"
+  gem "stackprof"
 end
