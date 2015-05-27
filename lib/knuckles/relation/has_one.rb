@@ -21,7 +21,7 @@ module Knuckles
       end
 
       def attribute_key
-        "#{key.to_s}_id".to_sym
+        @attribute_key ||= "#{key.to_s}_id".to_sym
       end
     end
   end

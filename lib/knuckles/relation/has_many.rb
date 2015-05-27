@@ -23,7 +23,7 @@ module Knuckles
       end
 
       def attribute_key
-        "#{key.to_s.sub(/s$/, '')}_ids".to_sym
+        @attribute_key ||= "#{key.to_s.sub(/s$/, '')}_ids".to_sym
       end
     end
   end
