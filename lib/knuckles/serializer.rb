@@ -27,6 +27,7 @@ module Knuckles
     end
 
     attr_accessor :object, :options, :children, :scope, :serialized
+    attr_accessor :cached
 
     def initialize(object, options = {})
       super(object)
@@ -66,7 +67,7 @@ module Knuckles
     end
 
     def cached?
-      !!serialized
+      !!cached
     end
 
     private

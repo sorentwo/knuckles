@@ -9,6 +9,7 @@ class KnucklesTest < Minitest::Test
 
   def test_configured_defaults
     refute_nil Knuckles.json
+    refute_nil Knuckles.cache
   end
 
   def test_configuring_json
@@ -18,12 +19,15 @@ class KnucklesTest < Minitest::Test
   end
 
   def test_configuring_knuckles
-    json = Object.new
+    json  = Object.new
+    cache = Object.new
 
     Knuckles.configure do |knuckles|
-      knuckles.json = json
+      knuckles.json  = json
+      knuckles.cache = cache
     end
 
-    assert_same json, Knuckles.json
+    assert_same json,  Knuckles.json
+    assert_same cache, Knuckles.cache
   end
 end

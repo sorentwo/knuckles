@@ -1,15 +1,18 @@
 module Knuckles
   class Pipeline
-    autoload :BuildFilter,     "knuckles/pipeline/build_filter"
-    autoload :CacheReadFilter, "knuckles/pipeline/cache_read_filter"
-    autoload :ChildrenFilter,  "knuckles/pipeline/children_filter"
-    autoload :SerializeFilter, "knuckles/pipeline/serialize_filter"
-    autoload :WrapFilter,      "knuckles/pipeline/wrap_filter"
+    autoload :BuildFilter,      "knuckles/pipeline/build_filter"
+    autoload :CacheReadFilter,  "knuckles/pipeline/cache_read_filter"
+    autoload :CacheWriteFilter, "knuckles/pipeline/cache_write_filter"
+    autoload :ChildrenFilter,   "knuckles/pipeline/children_filter"
+    autoload :SerializeFilter,  "knuckles/pipeline/serialize_filter"
+    autoload :WrapFilter,       "knuckles/pipeline/wrap_filter"
 
     def self.default_filters
       [ WrapFilter,
         ChildrenFilter,
+        CacheReadFilter,
         SerializeFilter,
+        CacheWriteFilter,
         BuildFilter ]
     end
 

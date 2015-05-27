@@ -12,6 +12,14 @@ module Knuckles
 
   extend self
 
+  def cache=(cache)
+    @cache = cache
+  end
+
+  def cache
+    @cache ||= ActiveSupport::Cache::NullStore.new
+  end
+
   def json=(json)
     @json = json
   end
@@ -25,6 +33,7 @@ module Knuckles
   end
 
   def reset!
-    @json = nil
+    @json  = nil
+    @cache = cache
   end
 end
