@@ -15,6 +15,10 @@ class ScoutSerializer < Knuckles::Serializer
              :industry,
              :created_at,
              :updated_at
+
+  def cache_key
+    "scouts/#{id}/#{updated_at}"
+  end
 end
 
 class ResponseSerializer < Knuckles::Serializer
@@ -30,6 +34,10 @@ class ResponseSerializer < Knuckles::Serializer
              :answered_at,
              :created_at,
              :updated_at
+
+  def cache_key
+    "responses/#{id}/#{updated_at}"
+  end
 end
 
 class TagSerializer < Knuckles::Serializer
@@ -41,6 +49,10 @@ class TagSerializer < Knuckles::Serializer
              :keywords,
              :created_at,
              :updated_at
+
+  def cache_key
+    "tags/#{id}/#{updated_at}"
+  end
 end
 
 class SubmissionSerializer < Knuckles::Serializer
@@ -62,4 +74,8 @@ class SubmissionSerializer < Knuckles::Serializer
   has_one  :scout,     serializer: ScoutSerializer
   has_many :responses, serializer: ResponseSerializer
   has_many :tags,      serializer: TagSerializer
+
+  def cache_key
+    "submissions/#{id}/#{updated_at}"
+  end
 end
