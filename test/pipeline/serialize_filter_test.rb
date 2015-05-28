@@ -3,10 +3,42 @@ require "test_helper"
 class SerializeFilterTest < Minitest::Test
   parallelize_me!
 
-  Filter = Knuckles::Pipeline::SerializeFilter
+  Filter     = Knuckles::Pipeline::SerializeFilter
+  Serializer = Knuckles::Serializer
 
-  PostSerializer = Class.new(Knuckles::Serializer) do
+  Post = Struct.new(:id, :title)
+
+  PostSerializer = Class.new(Serializer) do
     attributes :id, :title
+
+    def cache_key
+      "posts/#{id}"
+    end
+  end
+
+  def setup
+    Knuckles.cache = cache
+  end
+
+  def teardown
+    Knuckles.reset!
+  end
+
+  def test_serialized_values_inserted_when_cached
+    inst_a = PostSerializer.new(Post.new(1, "a"))
+    inst_b = PostSerializer.new(Post.new(2, "b"))
+    inst_c = PostSerializer.new(Post.new(3, "c"))
+
+    cache.write("posts/1", '{"thing":1}')
+    cache.write("posts/3", '{"thing":3}')
+
+    output = Filter.call([inst_a, inst_b, inst_c])
+
+    assert_equal [
+      '{"thing":1}',
+      '{"id":2,"title":"b"}',
+      '{"thing":3}'
+    ], output.map(&:serialized)
   end
 
   def test_serialization_is_stored
@@ -19,15 +51,9 @@ class SerializeFilterTest < Minitest::Test
     assert_equal '{"id":1,"title":"More"}', output.serialized
   end
 
-  def test_serialized_values_are_not_overwritten
-    post       = Post.new(1, "Updated")
-    serializer = PostSerializer.new(post)
+  private
 
-    serializer.serialized = "{}"
-    serializer.cached     = true
-
-    output, _ = Filter.call([serializer])
-
-    assert_equal "{}", output.serialized
+  def cache
+    @cache ||= ActiveSupport::Cache::MemoryStore.new
   end
 end

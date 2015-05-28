@@ -2,6 +2,10 @@ AuthorSerializer = Class.new(Knuckles::Serializer) do
   root :authors
 
   attributes :id, :name
+
+  def cache_key
+    "author/#{id}"
+  end
 end
 
 CommentSerializer = Class.new(Knuckles::Serializer) do
@@ -10,6 +14,10 @@ CommentSerializer = Class.new(Knuckles::Serializer) do
   attributes :id, :body
 
   has_one :author, serializer: AuthorSerializer
+
+  def cache_key
+    "comments/#{id}"
+  end
 end
 
 PostSerializer = Class.new(Knuckles::Serializer) do
@@ -18,4 +26,8 @@ PostSerializer = Class.new(Knuckles::Serializer) do
   attributes :id, :title
 
   has_many :comments, serializer: CommentSerializer
+
+  def cache_key
+    "posts/#{id}"
+  end
 end

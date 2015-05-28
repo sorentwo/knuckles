@@ -3,14 +3,16 @@ require "test_helper"
 class SerializationTest < Minitest::Test
   parallelize_me!
 
-  def test_serializing_without_caching
-    pipeline = Knuckles::Pipeline.new [
-      Knuckles::Pipeline::WrapFilter,
-      Knuckles::Pipeline::ChildrenFilter,
-      Knuckles::Pipeline::SerializeFilter,
-      Knuckles::Pipeline::BuildFilter
-    ]
+  def setup
+    Knuckles.cache = cache
+  end
 
+  def teardown
+    Knuckles.reset!
+  end
+
+  def test_serialization_pipeline
+    pipeline = Knuckles::Pipeline.new
     output = pipeline.call(posts, serializer: PostSerializer)
 
     assert_equal(JSON.dump({
@@ -26,9 +28,6 @@ class SerializationTest < Minitest::Test
         { id: 1, name: "Yukihiro" }
       ]
     }), output)
-  end
-
-  def test_serializing_with_caching
   end
 
   private
@@ -49,5 +48,9 @@ class SerializationTest < Minitest::Test
       Post.new(1, "Sonic", author, comments),
       Post.new(2, "Tails", author, [])
     ]
+  end
+
+  def cache
+    @cache ||= ActiveSupport::Cache::MemoryStore.new
   end
 end
