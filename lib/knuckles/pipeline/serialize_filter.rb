@@ -10,7 +10,9 @@ module Knuckles
 
         mapping.each do |key, node|
           node.serialized = fetched[key]
-        end.values
+        end
+
+        nodes
       end
 
       private
