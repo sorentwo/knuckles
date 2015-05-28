@@ -51,6 +51,6 @@ class SerializationTest < Minitest::Test
   end
 
   def cache
-    @cache ||= ActiveSupport::Cache::MemoryStore.new
+    ActiveSupport::Cache::MemoryStore.new
   end
 end

@@ -72,16 +72,17 @@ module Knuckles
     end
 
     def cache_key
-      [object.cache_key, child_cache_key].compact.flatten
+      key = [object.cache_key]
+
+      if children.any?
+        key << children.length.to_s
+        key << children.max_by(&:updated_at).cache_key
+      end
+
+      key
     end
 
     private
-
-    def child_cache_key
-      if children.any?
-        [children.length.to_s, children.max_by(&:updated_at).cache_key]
-      end
-    end
 
     def relation_attributes
       relations.each_with_object({}) do |(key, relation), memo|
