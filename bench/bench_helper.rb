@@ -4,10 +4,23 @@ Bundler.setup
 
 require "active_support/cache"
 require "benchmark/ips"
-require "ostruct"
 require "json"
 require "knuckles"
 require_relative "fixtures/serializers"
+
+class BenchModel
+  attr_reader :key
+
+  def initialize(key, attributes)
+    attributes.each do |key, value|
+      self.class.send(:define_method, key) { value }
+    end
+  end
+
+  def cache_key
+    "#{key}/#{id}/#{updated_at}"
+  end
+end
 
 module BenchHelper
   extend self
@@ -18,18 +31,18 @@ module BenchHelper
 
     loaded.map do |object|
       mapping.each do |key|
-        object[key] = structify(object[key])
+        object[key] = structify(key, object[key])
       end
 
-      structify(object)
+      structify('submissions', object)
     end
   end
 
-  def structify(object)
+  def structify(key, object)
     if object.is_a?(Array)
-      object.map { |obj| OpenStruct.new(obj) }
+      object.map { |obj| BenchModel.new(key, obj) }
     else
-      OpenStruct.new(object)
+      BenchModel.new(key, object)
     end
   end
 end
