@@ -151,7 +151,7 @@ class SerializerTest < Minitest::Test
     child    = Model.new(456, ["child/456", "their/789"])
     instance = Serializer.new(object, children: [child])
 
-    assert_equal ["model/123", "child/456", "their/789"], instance.cache_key
+    assert_equal ["model/123", "1", "child/456", "their/789"], instance.cache_key
   end
 
   def test_cache_key_with_children
@@ -160,6 +160,6 @@ class SerializerTest < Minitest::Test
     child_b  = Model.new(222, "child/222", Date.new(2015, 5, 20))
     instance = Serializer.new(object, children: [child_a, child_b])
 
-    assert_equal ["model/123", "child/222"], instance.cache_key
+    assert_equal ["model/123", "2", "child/222"], instance.cache_key
   end
 end

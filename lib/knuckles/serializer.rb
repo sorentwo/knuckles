@@ -39,7 +39,6 @@ module Knuckles
     end
 
     attr_accessor :object, :options, :children, :scope, :serialized
-    attr_accessor :cached
 
     def initialize(object, options = {})
       @object   = object
@@ -76,15 +75,11 @@ module Knuckles
       [object.cache_key, child_cache_key].compact.flatten
     end
 
-    def cached?
-      !!cached
-    end
-
     private
 
     def child_cache_key
       if children.any?
-        children.max_by(&:updated_at).cache_key
+        [children.length.to_s, children.max_by(&:updated_at).cache_key]
       end
     end
 
@@ -95,8 +90,8 @@ module Knuckles
     end
 
     def serialized_attributes
-      attributes.each_with_object({}) do |(key, prop), memo|
-        memo[prop] = public_send(prop)
+      attributes.each_with_object({}) do |(key, _), memo|
+        memo[key] = send(key)
       end
     end
   end
