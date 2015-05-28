@@ -63,7 +63,7 @@ module Knuckles
     end
 
     def cache_key
-      [object.cache_key, child_cache_key].compact
+      [object.cache_key, child_cache_key].compact.flatten
     end
 
     def cached?
