@@ -5,7 +5,7 @@ module Knuckles
     class BuildFilter < Filter
       def call
         output = nodes.each_with_object(set_backed_hash) do |node, memo|
-          memo[node.root] << node.serialized
+          memo[node.root] << node.serialized if node.serialized
         end
 
         jsonify_hash(output)
