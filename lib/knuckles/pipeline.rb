@@ -20,8 +20,7 @@ module Knuckles
       end
     end
 
-    attr_reader :filters
-    attr_accessor :notifications
+    attr_accessor :filters, :notifications
 
     def initialize(filters = self.class.default_filters)
       @filters       = filters.freeze
