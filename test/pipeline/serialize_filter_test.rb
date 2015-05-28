@@ -22,7 +22,9 @@ class SerializeFilterTest < Minitest::Test
   def test_serialized_values_are_not_overwritten
     post       = Post.new(1, "Updated")
     serializer = PostSerializer.new(post)
+
     serializer.serialized = "{}"
+    serializer.cached     = true
 
     output, _ = Filter.call([serializer])
 
