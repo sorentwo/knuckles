@@ -1,12 +1,12 @@
-require "delegate"
-
 module Knuckles
-  class Serializer < SimpleDelegator
+  class Serializer
     class << self
       attr_reader :_root, :_attributes, :_relations
 
       def attributes(*attributes)
         @_attributes = attributes.zip(attributes).to_h
+
+        @_attributes.each_key { |attribute| define_attribute(attribute) }
       end
 
       def root(root)
@@ -23,6 +23,18 @@ module Knuckles
 
       def associate(key, relation)
         (@_relations ||= {})[key] = relation
+
+        define_attribute(key)
+      end
+
+      private
+
+      def define_attribute(attribute)
+        unless method_defined?(attribute)
+          define_method(attribute) do
+            object.send(attribute)
+          end
+        end
       end
     end
 
@@ -30,8 +42,6 @@ module Knuckles
     attr_accessor :cached
 
     def initialize(object, options = {})
-      super(object)
-
       @object   = object
       @options  = options
       @children = options.fetch(:children, [])
