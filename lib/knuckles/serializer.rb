@@ -6,23 +6,23 @@ module Knuckles
       attr_reader :_root, :_attributes, :_relations
 
       def attributes(*attributes)
-        @_attributes = attributes
+        @_attributes = attributes.zip(attributes).to_h
       end
 
       def root(root)
         @_root = root
       end
 
-      def has_one(relation, serializer:)
-        associate(Knuckles::Relation::HasOne.new(relation, serializer))
+      def has_one(key, serializer:)
+        associate(key, Knuckles::Relation::HasOne.new(key, serializer))
       end
 
-      def has_many(relation, serializer:)
-        associate(Knuckles::Relation::HasMany.new(relation, serializer))
+      def has_many(key, serializer:)
+        associate(key, Knuckles::Relation::HasMany.new(key, serializer))
       end
 
-      def associate(relation)
-        (@_relations ||= []) << relation
+      def associate(key, relation)
+        (@_relations ||= {})[key] = relation
       end
     end
 
@@ -39,11 +39,11 @@ module Knuckles
     end
 
     def attributes
-      filter(self.class._attributes || [])
+      self.class._attributes || {}
     end
 
     def relations
-      self.class._relations || []
+      self.class._relations || {}
     end
 
     def root
@@ -79,13 +79,13 @@ module Knuckles
     end
 
     def relation_attributes
-      relations.each_with_object({}) do |relation, memo|
+      relations.each_with_object({}) do |(key, relation), memo|
         memo[relation.attribute_key] = relation.ids(self)
       end
     end
 
     def serialized_attributes
-      attributes.each_with_object({}) do |prop, memo|
+      attributes.each_with_object({}) do |(key, prop), memo|
         memo[prop] = public_send(prop)
       end
     end

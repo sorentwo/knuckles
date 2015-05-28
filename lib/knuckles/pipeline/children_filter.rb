@@ -17,7 +17,7 @@ module Knuckles
       private
 
       def build_children(serializer)
-        serializer.relations.flat_map do |relation|
+        serializer.relations.values.flat_map do |relation|
           relation.serializables(serializer)
         end
       end
