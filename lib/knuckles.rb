@@ -16,6 +16,7 @@ module Knuckles
     @cache = cache
   end
 
+  # TODO: Remove implicit dependency on `ActiveSupport` here
   def cache
     @cache ||= ActiveSupport::Cache::NullStore.new
   end
@@ -28,12 +29,21 @@ module Knuckles
     @json ||= JSON
   end
 
+  def notifications=(notifications)
+    @notifications = notifications
+  end
+
+  def notifications
+    @notifications ||= Knuckles::Notifications
+  end
+
   def configure
     yield self
   end
 
   def reset!
-    @json  = nil
-    @cache = cache
+    @json          = nil
+    @cache         = nil
+    @notifications = nil
   end
 end

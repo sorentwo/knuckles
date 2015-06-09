@@ -3,6 +3,10 @@ require "test_helper"
 class PipelineTest < Minitest::Test
   parallelize_me!
 
+  def teardown
+    Knuckles.reset!
+  end
+
   module Filter
     extend self
 
@@ -24,7 +28,7 @@ class PipelineTest < Minitest::Test
       ['knuckles.filter', { filter: 'downcase', context: {}}
     ])
 
-    pipeline.notifications = notifier
+    Knuckles.notifications = notifier
 
     pipeline.call([Object.new])
 

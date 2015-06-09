@@ -12,19 +12,10 @@ module Knuckles
         BuildFilter ]
     end
 
-    def self.notifications
-      if Object.const_defined?('ActiveSupport::Notifications')
-        ActiveSupport::Notifications
-      else
-        Knuckles::Notifications
-      end
-    end
-
     attr_accessor :filters, :notifications
 
     def initialize(filters = self.class.default_filters)
-      @filters       = filters.freeze
-      @notifications = self.class.notifications
+      @filters = filters.freeze
     end
 
     def call(objects, context = {})
@@ -40,7 +31,7 @@ module Knuckles
     private
 
     def instrument(operation, payload)
-      notifications.instrument(operation, payload) do |payload|
+      Knuckles.notifications.instrument(operation, payload) do |payload|
         yield payload
       end
     end
