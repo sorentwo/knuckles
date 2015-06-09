@@ -14,11 +14,11 @@ class PostSerializer < Knuckles::Serializer
   attributes :id, :title, :created_at
 end
 
-pipeline = Knuckles::Pipeline.new
-models   = 100.times.map { |i| Post.new(i, "title", Date.new) }
+builder = Knuckles::Builder.new
+models  = 100.times.map { |i| Post.new(i, "title", Date.new) }
 
 Benchmark.ips do |x|
   x.report("serialize.main") do
-    pipeline.call(models, serializer: PostSerializer)
+    builder.call(models, serializer: PostSerializer)
   end
 end

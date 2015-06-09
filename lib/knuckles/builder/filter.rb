@@ -1,5 +1,5 @@
 module Knuckles
-  class Pipeline
+  class Builder
     class Filter
       def self.call(nodes, context = {})
         new(nodes, context).call

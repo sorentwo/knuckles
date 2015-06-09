@@ -3,7 +3,7 @@ require "test_helper"
 class WrapFilterTest < Minitest::Test
   parallelize_me!
 
-  Filter     = Knuckles::Pipeline::WrapFilter
+  Filter     = Knuckles::Builder::WrapFilter
   Serializer = Struct.new(:object)
 
   def test_wrapping_objects

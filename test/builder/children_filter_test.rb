@@ -3,7 +3,7 @@ require "test_helper"
 class ChildrenFilterTest < Minitest::Test
   parallelize_me!
 
-  Filter = Knuckles::Pipeline::ChildrenFilter
+  Filter = Knuckles::Builder::ChildrenFilter
 
   def test_extracting_children
     author     = Author.new(1, "Alasdair")

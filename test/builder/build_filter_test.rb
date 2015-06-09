@@ -3,7 +3,7 @@ require "test_helper"
 class BuildFilterTest < Minitest::Test
   parallelize_me!
 
-  Filter = Knuckles::Pipeline::BuildFilter
+  Filter = Knuckles::Builder::BuildFilter
   Serializer = Struct.new(:root, :serialized)
 
   def test_building_nodes_without_children

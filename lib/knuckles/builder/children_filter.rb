@@ -1,5 +1,5 @@
 module Knuckles
-  class Pipeline
+  class Builder
     class ChildrenFilter < Filter
       def call
         array = nodes

@@ -3,7 +3,7 @@ require "test_helper"
 class SerializeFilterTest < Minitest::Test
   parallelize_me!
 
-  Filter     = Knuckles::Pipeline::SerializeFilter
+  Filter     = Knuckles::Builder::SerializeFilter
   Serializer = Knuckles::Serializer
 
   Post = Struct.new(:id, :title)

@@ -1,6 +1,6 @@
 require "test_helper"
 
-class PipelineTest < Minitest::Test
+class BuilderTest < Minitest::Test
   parallelize_me!
 
   def teardown
@@ -15,13 +15,13 @@ class PipelineTest < Minitest::Test
   end
 
   def test_reducing_with_filters
-    pipeline = Knuckles::Pipeline.new([Filter])
+    builder = Knuckles::Builder.new([Filter])
 
-    assert_equal ['tails'], pipeline.call(['TAILS'])
+    assert_equal ['tails'], builder.call(['TAILS'])
   end
 
   def test_instrumenting_filters
-    pipeline = Knuckles::Pipeline.new([Filter])
+    builder = Knuckles::Builder.new([Filter])
     notifier = Minitest::Mock.new
 
     notifier.expect(:instrument, [],
@@ -30,7 +30,7 @@ class PipelineTest < Minitest::Test
 
     Knuckles.notifications = notifier
 
-    pipeline.call([Object.new])
+    builder.call([Object.new])
 
     notifier.verify
   end

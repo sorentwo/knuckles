@@ -1,9 +1,9 @@
 module Knuckles
-  class Pipeline
-    autoload :BuildFilter,     "knuckles/pipeline/build_filter"
-    autoload :ChildrenFilter,  "knuckles/pipeline/children_filter"
-    autoload :SerializeFilter, "knuckles/pipeline/serialize_filter"
-    autoload :WrapFilter,      "knuckles/pipeline/wrap_filter"
+  class Builder
+    autoload :BuildFilter,     "knuckles/builder/build_filter"
+    autoload :ChildrenFilter,  "knuckles/builder/children_filter"
+    autoload :SerializeFilter, "knuckles/builder/serialize_filter"
+    autoload :WrapFilter,      "knuckles/builder/wrap_filter"
 
     def self.default_filters
       [ WrapFilter,

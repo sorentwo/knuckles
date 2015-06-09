@@ -1,5 +1,5 @@
 module Knuckles
-  class Pipeline
+  class Builder
     class SerializeFilter < Filter
       def call
         mapping = cache_key_mapping

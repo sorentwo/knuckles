@@ -1,7 +1,7 @@
 require 'set'
 
 module Knuckles
-  class Pipeline
+  class Builder
     class BuildFilter < Filter
       def call
         output = nodes.each_with_object(set_backed_hash) do |node, memo|

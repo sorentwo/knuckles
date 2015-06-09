@@ -1,5 +1,5 @@
 module Knuckles
-  class Pipeline
+  class Builder
     class WrapFilter < Filter
       alias_method :objects, :nodes
 

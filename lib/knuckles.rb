@@ -1,8 +1,8 @@
 require "json"
 
 require "knuckles/notifications"
-require "knuckles/pipeline/filter"
-require "knuckles/pipeline"
+require "knuckles/builder/filter"
+require "knuckles/builder"
 require "knuckles/relation"
 require "knuckles/serializer"
 require "knuckles/version"

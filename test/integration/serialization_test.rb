@@ -12,8 +12,8 @@ class SerializationTest < Minitest::Test
   end
 
   def test_serialization_pipeline
-    pipeline = Knuckles::Pipeline.new
-    output = pipeline.call(posts, serializer: PostSerializer)
+    builder = Knuckles::Builder.new
+    output = builder.call(posts, serializer: PostSerializer)
 
     assert_equal(JSON.dump({
       posts: [
