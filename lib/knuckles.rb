@@ -1,12 +1,12 @@
 require "json"
 
-require "knuckles/builder"
-require "knuckles/builder/filter"
-require "knuckles/notifications"
-require "knuckles/null_store"
 require "knuckles/relation"
 require "knuckles/serializer"
 require "knuckles/version"
+require "knuckles/builder"
+require "knuckles/builder/filter"
+require "knuckles/support/notifications"
+require "knuckles/support/null_store"
 
 module Knuckles
   NotImplementedError = Class.new(StandardError)
@@ -18,7 +18,7 @@ module Knuckles
   end
 
   def cache
-    @cache ||= Knuckles::NullStore.new
+    @cache ||= Knuckles::Support::NullStore.new
   end
 
   def json=(json)
@@ -34,7 +34,7 @@ module Knuckles
   end
 
   def notifications
-    @notifications ||= Knuckles::Notifications
+    @notifications ||= Knuckles::Support::Notifications.new
   end
 
   def configure

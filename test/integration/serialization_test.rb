@@ -3,10 +3,6 @@ require "test_helper"
 class SerializationTest < Minitest::Test
   parallelize_me!
 
-  def setup
-    Knuckles.cache = Knuckles::NullStore.new
-  end
-
   def teardown
     Knuckles.reset!
   end
