@@ -1,8 +1,9 @@
 require "json"
 
-require "knuckles/notifications"
-require "knuckles/builder/filter"
 require "knuckles/builder"
+require "knuckles/builder/filter"
+require "knuckles/notifications"
+require "knuckles/null_store"
 require "knuckles/relation"
 require "knuckles/serializer"
 require "knuckles/version"
@@ -16,9 +17,8 @@ module Knuckles
     @cache = cache
   end
 
-  # TODO: Remove implicit dependency on `ActiveSupport` here
   def cache
-    @cache ||= ActiveSupport::Cache::NullStore.new
+    @cache ||= Knuckles::NullStore.new
   end
 
   def json=(json)

@@ -4,7 +4,7 @@ class SerializationTest < Minitest::Test
   parallelize_me!
 
   def setup
-    Knuckles.cache = cache
+    Knuckles.cache = Knuckles::NullStore.new
   end
 
   def teardown
@@ -48,9 +48,5 @@ class SerializationTest < Minitest::Test
       Post.new(1, "Sonic", author, comments),
       Post.new(2, "Tails", author, [])
     ]
-  end
-
-  def cache
-    ActiveSupport::Cache::MemoryStore.new
   end
 end
