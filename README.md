@@ -1,23 +1,57 @@
 # Knuckles
 
-What's the point?
+What's it all about?
 
-* Active Model Serializer compatible API
-* Dependency graphed perforated caching
+* Active Model Serializer familiar serializer API
 * Emphasis on caching and composability
 * Reduced object instantiation
 * Optional complete instrumentation
-* Entirely agnostic, Rails integration is optional
+* Entirely agnostic, can be dropped into any project
+* Absolutely no runtime dependencies
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'knuckles'
+gem "knuckles"
+```
+
+## Configuration
+
+```ruby
+require "activesupport"
+require "oj"
+require "readthis"
+
+Knuckles.configure do |config|
+  config.json = Oj
+  config.cache = Readthis::Cache.new
+  config.notifications = ActiveSupport::Notifications
+end
 ```
 
 ## Usage
+
+The interface for defining serializers is largely based on Active Model
+Serializers, but with a few key differences.
+
+```ruby
+class ScoutSerializer
+  include Knuckles::Serializer
+
+  root 'scout'
+
+  attributes :id, :email, :display_name
+
+  has_one  :thing, serializer: ThingSerializer
+  has_many :other, serializer: OtherThingSerializer
+
+  def display_name(object, options)
+    "#{object.first_name} #{object.last_name}"
+  end
+end
+```
 
 ## Contributing
 
