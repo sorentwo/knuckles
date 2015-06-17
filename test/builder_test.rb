@@ -7,31 +7,18 @@ class BuilderTest < Minitest::Test
     Knuckles.reset!
   end
 
-  module Filter
-    extend self
+  # def test_instrumenting_filters
+  #   builder = Knuckles::Builder.new([Filter])
+  #   notifier = Minitest::Mock.new
 
-    def name; 'downcase'; end
-    def call(strs, _); strs.map(&:downcase); end
-  end
+  #   notifier.expect(:instrument, [],
+  #     ['knuckles.filter', { filter: "downcase" }
+  #   ])
 
-  def test_reducing_with_filters
-    builder = Knuckles::Builder.new([Filter])
+  #   Knuckles.notifications = notifier
 
-    assert_equal ['tails'], builder.call(['TAILS'])
-  end
+  #   builder.call([Object.new], serializer: Knuckles::Serializer)
 
-  def test_instrumenting_filters
-    builder = Knuckles::Builder.new([Filter])
-    notifier = Minitest::Mock.new
-
-    notifier.expect(:instrument, [],
-      ['knuckles.filter', { filter: 'downcase', context: {}}
-    ])
-
-    Knuckles.notifications = notifier
-
-    builder.call([Object.new])
-
-    notifier.verify
-  end
+  #   notifier.verify
+  # end
 end

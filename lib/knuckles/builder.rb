@@ -3,32 +3,26 @@ module Knuckles
     autoload :BuildFilter,     "knuckles/builder/build_filter"
     autoload :ChildrenFilter,  "knuckles/builder/children_filter"
     autoload :SerializeFilter, "knuckles/builder/serialize_filter"
-    autoload :WrapFilter,      "knuckles/builder/wrap_filter"
 
-    def self.default_filters
-      [ WrapFilter,
-        ChildrenFilter,
-        SerializeFilter,
-        BuildFilter ]
-    end
+    attr_reader :adapter
 
-    attr_accessor :filters, :notifications
-
-    def initialize(filters = self.class.default_filters)
-      @filters = filters.freeze
+    def initialize(adapter = Knuckles::Adapter::Sideload)
+      @adapter = adapter
     end
 
     def call(objects, context = {})
-      filters.reduce(objects) do |object, filter|
-        payload = { filter: filter.name, context: context }
+      serializers = wrapped(objects, context.fetch(:serializer))
 
-        instrument('knuckles.filter', payload) do
-          filter.call(object, context)
-        end
+      instrument('knuckles.filter', {}) do
+        adapter.serialize(serializers)
       end
     end
 
     private
+
+    def wrapped(objects, serializer)
+      objects.map { |object| serializer.new(object) }
+    end
 
     def instrument(operation, payload)
       Knuckles.notifications.instrument(operation, payload) do |payload|
