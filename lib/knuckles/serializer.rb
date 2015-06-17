@@ -72,14 +72,7 @@ module Knuckles
     end
 
     def cache_key
-      key = [object.cache_key]
-
-      if children.any?
-        key << children.length.to_s
-        key << children.max_by(&:updated_at).cache_key
-      end
-
-      key
+      Knuckles.key_strategy.cache_key(object, children)
     end
 
     private

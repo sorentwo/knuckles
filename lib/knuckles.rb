@@ -1,5 +1,6 @@
 require "json"
 
+require "knuckles/key_strategy"
 require "knuckles/relation"
 require "knuckles/serializer"
 require "knuckles/version"
@@ -27,6 +28,10 @@ module Knuckles
 
   def json
     @json ||= JSON
+  end
+
+  def key_strategy
+    @key_strategy ||= Knuckles::KeyStrategy.new
   end
 
   def notifications=(notifications)
