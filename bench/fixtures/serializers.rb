@@ -44,7 +44,7 @@ class TagSerializer < Knuckles::Serializer
 end
 
 class SubmissionSerializer < Knuckles::Serializer
-  root = :submission
+  root :submission
 
   attributes :id,
              :screener_id,

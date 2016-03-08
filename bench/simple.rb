@@ -2,20 +2,16 @@ require_relative "./bench_helper"
 
 Knuckles.cache = ActiveSupport::Cache::MemoryStore.new
 
-Post = Struct.new(:id, :title, :created_at) do
-  def cache_key
-    "posts/#{id}"
-  end
-end
+Post = Struct.new(:id, :title, :updated_at)
 
 class PostSerializer < Knuckles::Serializer
   root :posts
 
-  attributes :id, :title, :created_at
+  attributes :id, :title, :updated_at
 end
 
 builder = Knuckles::Builder.new
-models  = 100.times.map { |i| Post.new(i, "title", Date.new) }
+models  = 100.times.map { |i| Post.new(i, "title", Time.new) }
 
 Benchmark.ips do |x|
   x.report("serialize.main") do
