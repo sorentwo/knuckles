@@ -1,5 +1,3 @@
-require "knuckles/view"
-
 FooModel = Struct.new(:id, :name)
 
 FooView = Module.new do
