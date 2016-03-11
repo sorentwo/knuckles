@@ -4,7 +4,9 @@ module Knuckles
   module Renderer
     extend self
 
-    def call(objects, view, options)
+    def call(objects, options)
+      view = options.fetch(:view)
+
       objects.each_with_object(set_backed_hash) do |object, memo|
         memo[view.root] << view.data(object, options)
 

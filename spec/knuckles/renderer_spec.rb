@@ -6,7 +6,7 @@ RSpec.describe Knuckles::Renderer do
       post_a = Post.new(1, "hello", [tag_a, tag_b])
       post_b = Post.new(2, "there", [tag_a])
 
-      rendered = Knuckles::Renderer.call([post_a, post_b], PostView, {})
+      rendered = Knuckles::Renderer.call([post_a, post_b], view: PostView)
 
       expect(rendered).to eq(
         posts: Set.new([
