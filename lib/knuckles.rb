@@ -1,6 +1,8 @@
 require "active_support/notifications"
+require "active_support/cache"
 require "json"
 
+require "knuckles/fetcher"
 require "knuckles/pipeline"
 require "knuckles/renderer"
 require "knuckles/view"
@@ -8,7 +10,11 @@ require "knuckles/view"
 module Knuckles
   extend self
 
-  attr_writer :notifications, :serializer
+  attr_writer :cache, :notifications, :serializer
+
+  def cache
+    @cache ||= ActiveSupport::Cache::MemoryStore.new
+  end
 
   def notifications
     @notifications ||= ActiveSupport::Notifications

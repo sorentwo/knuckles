@@ -15,6 +15,10 @@ module Knuckles
       {}
     end
 
+    def cache_key(object)
+      "#{root}/#{object.id}/#{object.updated_at.to_i}"
+    end
+
     ## Relations
 
     def has_one(object, view, options = {})
