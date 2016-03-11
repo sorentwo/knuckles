@@ -6,12 +6,18 @@ module Knuckles
       "hydrator".freeze
     end
 
-    def call(objects, hydrate: nil)
-      if hydrate
-        hydrate.call(objects)
+    def call(objects, options)
+      if hydrate = options[:hydrate]
+        hydrate.call(hydratable(objects))
       else
         objects
       end
+    end
+
+    private
+
+    def hydratable(objects)
+      objects.reject { |hash| hash[:result] }
     end
   end
 end

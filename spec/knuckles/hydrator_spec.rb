@@ -3,7 +3,7 @@ RSpec.describe Knuckles::Hydrator do
     it "is a noop without a hydrate lambda" do
       objects = [Tag.new(1, "alpha")]
 
-      expect(Knuckles::Hydrator.call(objects)).to eq(objects)
+      expect(Knuckles::Hydrator.call(objects, {})).to eq(objects)
     end
 
     it "refines the object collection using hydrate" do

@@ -6,7 +6,9 @@ module Knuckles
       "fetcher".freeze
     end
 
-    def call(objects, view:)
+    def call(objects, options)
+      view = options.fetch(:view)
+
       objects.map do |hash|
         key = view.cache_key(hash[:object])
 

@@ -1,7 +1,10 @@
 module Knuckles
   class Pipeline
     def self.default_stages
-      [Knuckles::Fetcher, Knuckles::Hydrator, Knuckles::Renderer]
+      [Knuckles::Fetcher,
+       Knuckles::Hydrator,
+       Knuckles::Renderer,
+       Knuckles::Combiner]
     end
 
     attr_accessor :stages
