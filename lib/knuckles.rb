@@ -5,6 +5,12 @@ require "knuckles/view"
 module Knuckles
   extend self
 
+  attr_writer :serializer
+
+  def serializer
+    @serializer ||= JSON
+  end
+
   def render(objects, view, options = {})
     objects.each_with_object(set_backed_hash) do |object, memo|
       memo[view.root] << view.data(object, options)
@@ -16,7 +22,7 @@ module Knuckles
   end
 
   def render_to_string(object, view, options = {})
-    JSON.dump(set_backed_to_array(render(object, view, options)))
+    serializer.dump(set_backed_to_array(render(object, view, options)))
   end
 
   private
