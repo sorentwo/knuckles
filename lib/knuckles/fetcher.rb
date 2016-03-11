@@ -3,7 +3,7 @@ module Knuckles
     extend self
 
     def name
-      "Fetcher".freeze
+      "fetcher".freeze
     end
 
     def call(objects, view:)

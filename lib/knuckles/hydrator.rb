@@ -3,7 +3,7 @@ module Knuckles
     extend self
 
     def name
-      "Hydrator".freeze
+      "hydrator".freeze
     end
 
     def call(objects, hydrate: nil)

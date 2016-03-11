@@ -1,5 +1,3 @@
-require "set"
-
 module Knuckles
   module Renderer
     extend self
@@ -11,19 +9,24 @@ module Knuckles
     def call(objects, options)
       view = options.fetch(:view)
 
-      objects.each_with_object(set_backed_hash) do |hash, memo|
+      objects.each do |hash|
+        next if hash[:results]
+
+        memo = array_backed_hash
         memo[view.root] << view.data(hash[:object], options)
 
         view.relations(hash[:object], options).each do |root, data|
           memo[root] += data
         end
+
+        hash[:results] = memo
       end
     end
 
     private
 
-    def set_backed_hash
-      Hash.new { |hash, key| hash[key] = Set.new }
+    def array_backed_hash
+      Hash.new { |hash, key| hash[key] = [] }
     end
   end
 end
