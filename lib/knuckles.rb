@@ -1,5 +1,6 @@
 require "json"
 require "set"
+require "knuckles/view"
 
 module Knuckles
   extend self

@@ -5,11 +5,10 @@ require "stackprof"
 
 FileUtils.mkdir_p("tmp")
 
-builder = Knuckles::Builder.new
-models  = BenchHelper.submissions
+models = BenchHelper.submissions
 
 StackProf.run(mode: :cpu, interval: 500, out: "tmp/stackprof-cpu.dump") do
   100.times do
-    builder.call(models, serializer: SubmissionSerializer)
+    Knuckles.render_to_string(models, SubmissionView)
   end
 end

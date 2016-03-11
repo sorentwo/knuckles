@@ -1,65 +1,93 @@
-class ScoutSerializer < Knuckles::Serializer
-  root :scout
+module ScoutView
+  extend Knuckles::View
 
-  attributes :id,
-             :first_name,
-             :gender,
-             :city,
-             :state,
-             :country,
-             :education,
-             :employment_status,
-             :ethnicity,
-             :household_composition,
-             :household_income,
-             :industry,
-             :created_at,
-             :updated_at
+  def self.root
+    :scouts
+  end
+
+  def self.data(object, _)
+    { id: object.id,
+      first_name: object.first_name,
+      gender: object.gender,
+      city: object.city,
+      state: object.state,
+      country: object.country,
+      education: object.education,
+      employment_status: object.employment_status,
+      ethnicity: object.ethnicity,
+      household_composition: object.household_composition,
+      household_income: object.household_income,
+      industry: object.industry,
+      created_at: object.created_at,
+      updated_at: object.updated_at }
+  end
 end
 
-class ResponseSerializer < Knuckles::Serializer
-  root :response
+module ResponseView
+  extend Knuckles::View
 
-  attributes :id,
-             :answers,
-             :question_id,
-             :respondable_id,
-             :longitude,
-             :latitude,
-             :time_zone,
-             :answered_at,
-             :created_at,
-             :updated_at
+  def self.root
+    :responses
+  end
+
+  def self.data(object, _)
+    { id: object.id,
+      answers: object.answers,
+      question_id: object.question_id,
+      respondable_id: object.respondable_id,
+      longitude: object.longitude,
+      latitude: object.latitude,
+      time_zone: object.time_zone,
+      answered_at: object.answered_at,
+      created_at: object.created_at,
+      updated_at: object.updated_at }
+  end
 end
 
-class TagSerializer < Knuckles::Serializer
-  attributes :id,
-             :parent_id,
-             :name,
-             :group,
-             :auto_tag,
-             :keywords,
-             :created_at,
-             :updated_at
+module TagView
+  extend Knuckles::View
+
+  def self.root
+    :tags
+  end
+
+  def self.data(object, _)
+    { id: object.id,
+      parent_id: object.parent_id,
+      name: object.name,
+      group: object.group,
+      auto_tag: object.auto_tag,
+      keywords: object.keywords,
+      created_at: object.created_at,
+      updated_at: object.updated_at }
+  end
 end
 
-class SubmissionSerializer < Knuckles::Serializer
-  root :submission
+module SubmissionView
+  extend Knuckles::View
 
-  attributes :id,
-             :screener_id,
-             :rating,
-             :latitude,
-             :longitude,
-             :source,
-             :time_zone,
-             :bookmarks_count,
-             :notes_count,
-             :finished_at,
-             :created_at,
-             :updated_at
+  def self.root
+    :submissions
+  end
 
-  has_one  :scout,     serializer: ScoutSerializer
-  has_many :responses, serializer: ResponseSerializer
-  has_many :tags,      serializer: TagSerializer
+  def self.data(object, _)
+    { id: object.id,
+      screener_id: object.screener_id,
+      rating: object.rating,
+      latitude: object.latitude,
+      longitude: object.longitude,
+      source: object.source,
+      time_zone: object.time_zone,
+      bookmarks_count: object.bookmarks_count,
+      notes_count: object.notes_count,
+      finished_at: object.finished_at,
+      created_at: object.created_at,
+      updated_at: object.updated_at }
+  end
+
+  def self.relations(object, _)
+    { scouts: has_one(object.scout, ScoutView),
+      responses: has_many(object.responses, ResponseView),
+      tags: has_many(object.tags, TagView) }
+  end
 end
