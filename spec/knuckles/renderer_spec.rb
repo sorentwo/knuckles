@@ -6,9 +6,10 @@ RSpec.describe Knuckles::Renderer do
       post_a = Post.new(1, "hello", [tag_a, tag_b])
       post_b = Post.new(2, "there", [tag_a])
 
-      rendered = Knuckles::Renderer.call([post_a, post_b], view: PostView)
+      objects = Knuckles.prepare([post_a, post_b])
+      results = Knuckles::Renderer.call(objects, view: PostView)
 
-      expect(rendered).to eq(
+      expect(results).to eq(
         posts: Set.new([
           {id: 1, title: "hello", tag_ids: [1, 2]},
           {id: 2, title: "there", tag_ids: [1]}

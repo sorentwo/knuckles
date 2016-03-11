@@ -7,10 +7,13 @@ module Knuckles
     end
 
     def call(objects, view:)
-      objects.map do |object|
-        key = view.cache_key(object)
+      objects.map do |hash|
+        key = view.cache_key(hash[:object])
 
-        {key: key, object: object, result: Knuckles.cache.read(key)}
+        hash[:key] = key
+        hash[:result] = Knuckles.cache.read(key)
+
+        hash
       end
     end
   end

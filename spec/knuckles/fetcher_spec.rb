@@ -5,6 +5,7 @@ RSpec.describe Knuckles::Fetcher do
 
       Knuckles.cache.write(TagView.cache_key(objects.first), "result")
 
+      objects = Knuckles.prepare(objects)
       results = Knuckles::Fetcher.call(objects, view: TagView)
       results = results.map { |hash| hash[:result] }
 

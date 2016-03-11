@@ -35,4 +35,10 @@ module Knuckles
 
     pipeline.call(objects, options)
   end
+
+  def prepare(objects)
+    objects.map do |object|
+      {object: object, key: nil, result: nil}
+    end
+  end
 end
