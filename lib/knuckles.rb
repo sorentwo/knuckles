@@ -24,6 +24,12 @@ module Knuckles
     @serializer ||= JSON
   end
 
+  def reset!
+    @cache = nil
+    @notifications = nil
+    @serializer = nil
+  end
+
   def render(objects, options = {})
     pipeline = Knuckles::Pipeline.new
 
