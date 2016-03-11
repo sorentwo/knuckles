@@ -20,8 +20,8 @@ RSpec.describe Knuckles::Pipeline do
           'strip'
         end
 
-        def self.call(text, _)
-          text.strip
+        def self.call(objects, _)
+          objects.map { |hash| hash[:object].strip!; hash }
         end
       end
 
@@ -30,14 +30,15 @@ RSpec.describe Knuckles::Pipeline do
           'downcase'
         end
 
-        def self.call(text, _)
-          text.downcase
+        def self.call(objects, _)
+          objects.map { |hash| hash[:object].downcase!; hash }
         end
       end
 
       pipeline = Knuckles::Pipeline.new(stages: [filter_a, filter_b])
 
-      expect(pipeline.call(" KNUCKLES ", {})).to eq("knuckles")
+      expect(pipeline.call([" KNUCKLES "], {}))
+        .to eq([{object: "knuckles", key: nil, result: nil}])
     end
   end
 end

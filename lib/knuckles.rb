@@ -3,6 +3,7 @@ require "active_support/cache"
 require "json"
 
 require "knuckles/fetcher"
+require "knuckles/hydrator"
 require "knuckles/pipeline"
 require "knuckles/renderer"
 require "knuckles/view"

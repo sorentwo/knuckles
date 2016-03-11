@@ -1,7 +1,7 @@
 module Knuckles
   class Pipeline
     def self.default_stages
-      [Knuckles::Fetcher, Knuckles::Renderer]
+      [Knuckles::Fetcher, Knuckles::Hydrator, Knuckles::Renderer]
     end
 
     attr_accessor :stages
@@ -11,7 +11,9 @@ module Knuckles
     end
 
     def call(objects, options)
-      stages.reduce(objects) do |results, filter|
+      prepared = Knuckles.prepare(objects)
+
+      stages.reduce(prepared) do |results, filter|
         instrument('knuckles.filter', filter: filter.name) do
           filter.call(results, options)
         end
