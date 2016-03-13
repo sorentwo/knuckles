@@ -7,9 +7,13 @@ RSpec.describe Knuckles::Fetcher do
 
       objects = Knuckles.prepare(objects)
       results = Knuckles::Fetcher.call(objects, view: TagView)
-      results = results.map { |hash| hash[:result] }
 
-      expect(results).to eq(["result", nil])
+      expect(pluck(results, :result)).to eq(["result", nil])
+      expect(pluck(results, :cached?)).to eq([true, false])
     end
+  end
+
+  def pluck(enum, key)
+    enum.map { |hash| hash[key] }
   end
 end

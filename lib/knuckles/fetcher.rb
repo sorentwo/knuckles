@@ -9,13 +9,13 @@ module Knuckles
     def call(objects, options)
       view = options.fetch(:view)
 
-      objects.map do |hash|
+      objects.each do |hash|
         key = view.cache_key(hash[:object])
+        res = Knuckles.cache.read(key)
 
         hash[:key] = key
-        hash[:result] = Knuckles.cache.read(key)
-
-        hash
+        hash[:cached?] = !!res
+        hash[:result] = res
       end
     end
   end

@@ -7,6 +7,7 @@ require "knuckles/fetcher"
 require "knuckles/hydrator"
 require "knuckles/pipeline"
 require "knuckles/renderer"
+require "knuckles/writer"
 require "knuckles/view"
 
 module Knuckles
@@ -44,7 +45,7 @@ module Knuckles
 
   def prepare(objects)
     objects.map do |object|
-      {object: object, key: nil, result: nil}
+      {object: object, key: nil, cached: false, result: nil}
     end
   end
 end

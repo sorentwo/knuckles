@@ -17,7 +17,7 @@ module Knuckles
       prepared = Knuckles.prepare(objects)
 
       stages.reduce(prepared) do |results, filter|
-        instrument('knuckles.filter', filter: filter.name) do
+        instrument("knuckles.filter", filter: filter.name) do
           filter.call(results, options)
         end
       end

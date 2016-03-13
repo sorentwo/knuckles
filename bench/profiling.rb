@@ -9,6 +9,6 @@ models = BenchHelper.submissions
 
 StackProf.run(mode: :cpu, interval: 500, out: "tmp/stackprof-cpu.dump") do
   100.times do
-    Knuckles.render_to_string(models, SubmissionView)
+    Knuckles.render(models, view: SubmissionView)
   end
 end
