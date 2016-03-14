@@ -6,20 +6,24 @@ module Knuckles
       "hydrator".freeze
     end
 
-    def call(objects, options)
+    def call(prepared, options)
       hydrate = options[:hydrate]
 
-      if hydrate
-        hydrate.call(hydratable(objects))
-      else
-        objects
+      if hydrate && any_missing?(prepared)
+        hydrate.call(hydratable(prepared))
       end
+
+      prepared
     end
 
     private
 
-    def hydratable(objects)
-      objects.reject { |hash| hash[:result] }
+    def any_missing?(prepared)
+      prepared.any? { |hash| !hash[:cached?] }
+    end
+
+    def hydratable(prepared)
+      prepared.reject { |hash| hash[:cached?] }
     end
   end
 end
