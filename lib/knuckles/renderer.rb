@@ -10,23 +10,18 @@ module Knuckles
       view = options.fetch(:view)
 
       objects.each do |hash|
-        next if hash[:cached?]
-
-        memo = array_backed_hash
-        memo[view.root] << view.data(hash[:object], options)
-
-        view.relations(hash[:object], options).each do |root, data|
-          memo[root] += data
+        unless hash[:cached?]
+          hash[:result] = do_render(hash[:object], view, options)
         end
-
-        hash[:result] = memo
       end
     end
 
     private
 
-    def array_backed_hash
-      Hash.new { |hash, key| hash[key] = [] }
+    def do_render(object, view, options)
+      view.relations(object, options).merge!(
+        view.root => [view.data(object, options)]
+      )
     end
   end
 end

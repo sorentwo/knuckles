@@ -10,9 +10,9 @@ module PostView
   end
 
   def self.data(object, _)
-    { id: object.id,
-      title: object.title,
-      updated_at: object.updated_at }
+    {id: object.id,
+     title: object.title,
+     updated_at: object.updated_at}
   end
 end
 
