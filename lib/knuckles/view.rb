@@ -22,7 +22,7 @@ module Knuckles
     ## Relations
 
     def has_one(object, view, options = {})
-      view.data(object, options)
+      [view.data(object, options)]
     end
 
     def has_many(objects, view, options = {})

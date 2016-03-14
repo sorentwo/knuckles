@@ -28,8 +28,7 @@ RSpec.describe Knuckles::View do
       object = Tag.new(1, "Alpha")
 
       expect(view.has_one(object, TagView)).to eq(
-        id: object.id,
-        name: object.name
+        [{id: object.id, name: object.name}]
       )
     end
   end
