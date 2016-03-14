@@ -4,6 +4,6 @@ models = BenchHelper.submissions
 
 Benchmark.ips do |x|
   x.report("serialize.realistic") do
-    Knuckles.render_to_string(models, SubmissionView)
+    Knuckles.render(models, view: SubmissionView)
   end
 end

@@ -16,7 +16,7 @@ module PostView
   end
 end
 
-models = 100.times.map { |i| Post.new(i, "title", Time.new.to_i) }
+models = 100.times.map { |i| Post.new(i, "title", Time.new) }
 
 Benchmark.ips do |x|
   x.report("serialize.main") do

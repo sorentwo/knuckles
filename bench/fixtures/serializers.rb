@@ -86,7 +86,7 @@ module SubmissionView
   end
 
   def self.relations(object, _)
-    { scouts: has_one(object.scout, ScoutView),
+    { scouts: [has_one(object.scout, ScoutView)],
       responses: has_many(object.responses, ResponseView),
       tags: has_many(object.tags, TagView) }
   end
