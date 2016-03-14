@@ -17,21 +17,21 @@ RSpec.describe Knuckles::Pipeline do
     it "aggregates the result of all stages" do
       filter_a = Module.new do
         def self.name
-          'strip'
+          "strip"
         end
 
         def self.call(objects, _)
-          objects.map { |hash| hash[:object].strip!; hash }
+          objects.each { |hash| hash[:object].strip! }
         end
       end
 
       filter_b = Module.new do
         def self.name
-          'downcase'
+          "downcase"
         end
 
         def self.call(objects, _)
-          objects.map { |hash| hash[:object].downcase!; hash }
+          objects.each { |hash| hash[:object].downcase! }
         end
       end
 

@@ -40,12 +40,12 @@ module Knuckles
   end
 
   def render_to_string(objects, options = {})
-    serializer.dump(render(objects))
+    serializer.dump(render(objects, options))
   end
 
   def prepare(objects)
     objects.map do |object|
-      {object: object, key: nil, cached: false, result: nil}
+      {object: object, key: nil, cached?: false, result: nil}
     end
   end
 end

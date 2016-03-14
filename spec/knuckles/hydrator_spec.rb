@@ -10,7 +10,7 @@ RSpec.describe Knuckles::Hydrator do
       objects = [Tag.new(1, "alpha"), Tag.new(2, "gamma")]
       prepared = Knuckles.prepare(objects)
 
-      hydrate = -> (hashes) do
+      hydrate = lambda do |hashes|
         hashes.each { |hash| hash[:object] = :updated }
       end
 

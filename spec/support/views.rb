@@ -25,4 +25,3 @@ TagView = Module.new do
     {id: tag.id, name: tag.name}
   end
 end
-

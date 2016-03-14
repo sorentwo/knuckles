@@ -7,7 +7,9 @@ module Knuckles
     end
 
     def call(objects, options)
-      if hydrate = options[:hydrate]
+      hydrate = options[:hydrate]
+
+      if hydrate
         hydrate.call(hydratable(objects))
       else
         objects

@@ -4,6 +4,7 @@ module Knuckles
       [Knuckles::Fetcher,
        Knuckles::Hydrator,
        Knuckles::Renderer,
+       Knuckles::Writer,
        Knuckles::Combiner]
     end
 

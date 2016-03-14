@@ -10,7 +10,7 @@ module Knuckles
       view = options.fetch(:view)
 
       objects.each do |hash|
-        next if hash[:cached]
+        next if hash[:cached?]
 
         memo = array_backed_hash
         memo[view.root] << view.data(hash[:object], options)

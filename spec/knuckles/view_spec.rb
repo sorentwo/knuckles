@@ -41,10 +41,9 @@ RSpec.describe Knuckles::View do
 
       objects = [object_a, object_b]
 
-      expect(view.has_many(objects, TagView)).to eq([
-        { id: 1, name: "Alpha" },
-        { id: 2, name: "Beta" }
-      ])
+      expect(view.has_many(objects, TagView)).to eq(
+        [{id: 1, name: "Alpha"}, {id: 2, name: "Beta"}]
+      )
     end
   end
 end

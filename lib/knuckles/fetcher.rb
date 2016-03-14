@@ -14,7 +14,7 @@ module Knuckles
         res = Knuckles.cache.read(key)
 
         hash[:key] = key
-        hash[:cached?] = !!res
+        hash[:cached?] = !res.nil?
         hash[:result] = res
       end
     end

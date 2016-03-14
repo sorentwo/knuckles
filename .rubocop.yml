@@ -1,0 +1,23 @@
+AllCops:
+  Exclude:
+    - 'bench/**/*'
+    - 'bin/*'
+    - 'tmp/**/*'
+    - 'vendor/**/*'
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+  EnforcedStyleForEmptyBraces: no_space
+
+# Extend self preserves private methods
+Style/ModuleFunction:
+  Enabled: false
+
+Style/PredicateName:
+  NamePrefix:
+    - is_
+  NamePrefixBlacklist:
+    - is_
