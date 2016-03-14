@@ -6,17 +6,24 @@ module Knuckles
       "fetcher".freeze
     end
 
-    def call(objects, options)
-      view = options.fetch(:view)
+    def call(prepared, options)
+      results = get_cached(prepared, options.fetch(:view))
 
-      objects.each do |hash|
-        key = view.cache_key(hash[:object])
-        res = Knuckles.cache.read(key)
-
-        hash[:key] = key
-        hash[:cached?] = !res.nil?
-        hash[:result] = res
+      prepared.each do |hash|
+        result = results[hash[:key]]
+        hash[:cached?] = !result.nil?
+        hash[:result] = result
       end
+    end
+
+    private
+
+    def get_cached(prepared, view)
+      keys = prepared.map do |hash|
+        hash[:key] = view.cache_key(hash[:object])
+      end
+
+      Knuckles.cache.read_multi(*keys)
     end
   end
 end
