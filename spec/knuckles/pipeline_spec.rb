@@ -50,7 +50,6 @@ RSpec.describe Knuckles::Pipeline do
         custom,
         Knuckles::Fetcher
       ])
-
     end
   end
 

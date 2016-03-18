@@ -2,16 +2,16 @@ require "active_support/notifications"
 require "active_support/cache"
 require "json"
 
-require "knuckles/combiner"
-require "knuckles/dumper"
-require "knuckles/fetcher"
-require "knuckles/hydrator"
-require "knuckles/pipeline"
-require "knuckles/renderer"
-require "knuckles/writer"
-require "knuckles/view"
-
 module Knuckles
+  autoload :Combiner, "knuckles/combiner"
+  autoload :Dumper, "knuckles/dumper"
+  autoload :Fetcher, "knuckles/fetcher"
+  autoload :Hydrator, "knuckles/hydrator"
+  autoload :Pipeline, "knuckles/pipeline"
+  autoload :Renderer, "knuckles/renderer"
+  autoload :View, "knuckles/view"
+  autoload :Writer, "knuckles/writer"
+
   extend self
 
   attr_writer :cache, :notifications, :serializer
