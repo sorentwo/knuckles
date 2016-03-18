@@ -1,7 +1,7 @@
 require "knuckles"
 
 RSpec.describe Knuckles do
-  before do
+  after do
     Knuckles.reset!
   end
 

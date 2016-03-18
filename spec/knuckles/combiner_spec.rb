@@ -18,14 +18,14 @@ RSpec.describe Knuckles::Combiner do
       combined = Knuckles::Combiner.call(prepared, {})
 
       expect(combined).to eq(
-        posts: [
+        posts: Set.new([
           {id: 1, title: "hello", tag_ids: [1, 2]},
           {id: 2, title: "there", tag_ids: [1]}
-        ],
-        tags: [
+        ]),
+        tags: Set.new([
           {id: 1, name: "alpha"},
           {id: 2, name: "gamma"}
-        ]
+        ])
       )
     end
   end

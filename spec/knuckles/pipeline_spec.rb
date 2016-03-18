@@ -38,7 +38,7 @@ RSpec.describe Knuckles::Pipeline do
       pipeline = Knuckles::Pipeline.new(stages: [filter_a, filter_b])
 
       expect(pipeline.call([" KNUCKLES "], {}))
-        .to eq([{object: "knuckles", key: nil, result: nil}])
+        .to eq([{object: "knuckles", cached?: false, key: nil, result: nil}])
     end
   end
 end

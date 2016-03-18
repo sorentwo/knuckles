@@ -5,7 +5,8 @@ module Knuckles
        Knuckles::Hydrator,
        Knuckles::Renderer,
        Knuckles::Writer,
-       Knuckles::Combiner]
+       Knuckles::Combiner,
+       Knuckles::Dumper]
     end
 
     attr_accessor :stages

@@ -3,6 +3,7 @@ require "active_support/cache"
 require "json"
 
 require "knuckles/combiner"
+require "knuckles/dumper"
 require "knuckles/fetcher"
 require "knuckles/hydrator"
 require "knuckles/pipeline"
@@ -37,10 +38,6 @@ module Knuckles
     pipeline = Knuckles::Pipeline.new
 
     pipeline.call(objects, options)
-  end
-
-  def render_to_string(objects, options = {})
-    serializer.dump(render(objects, options))
   end
 
   def prepare(objects)
