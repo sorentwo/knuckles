@@ -6,10 +6,23 @@ RSpec.describe Knuckles::Fetcher do
       Knuckles.cache.write(Knuckles.keygen.expand_key(objects.first), "result")
 
       objects = prepare(objects)
-      results = Knuckles::Fetcher.call(objects, view: TagView)
+      results = Knuckles::Fetcher.call(objects, {})
 
       expect(pluck(results, :result)).to eq(["result", nil])
       expect(pluck(results, :cached?)).to eq([true, false])
+    end
+
+    it "allows passing a custom keygen" do
+      keygen = Module.new do
+        def self.expand_key(object)
+          object.name
+        end
+      end
+
+      objects = prepare([Tag.new(1, "alpha")])
+      results = Knuckles::Fetcher.call(objects, keygen: keygen)
+
+      expect(pluck(results, :key)).to eq(["alpha"])
     end
   end
 
