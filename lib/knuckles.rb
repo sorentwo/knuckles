@@ -32,6 +32,10 @@ module Knuckles
     @serializer ||= JSON
   end
 
+  def configure
+    yield self
+  end
+
   def reset!
     @cache = nil
     @notifications = nil

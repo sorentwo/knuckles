@@ -17,5 +17,15 @@ RSpec.describe Knuckles do
       expect(Knuckles.notifications).to eq(custom)
       expect(Knuckles.serializer).to eq(custom)
     end
+
+    it "provides a confugration block for convenience" do
+      custom = Object.new
+
+      Knuckles.configure do |config|
+        config.cache = custom
+      end
+
+      expect(Knuckles.cache).to eq(custom)
+    end
   end
 end
