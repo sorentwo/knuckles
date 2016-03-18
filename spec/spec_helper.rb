@@ -1,7 +1,10 @@
+require "coveralls"
 require "knuckles"
 
 require_relative "./support/models"
 require_relative "./support/views"
+
+Coveralls.wear!
 
 module PrepHelper
   def prepare(objects)
