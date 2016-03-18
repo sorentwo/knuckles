@@ -2,6 +2,7 @@ RSpec.describe Knuckles::Dumper do
   describe ".call" do
     it "dumps a tree of objects" do
       objects = {
+        author: {id: 1, name: "Ernest"},
         posts: Set.new([
           {id: 1, title: "great"},
           {id: 2, title: "stuff"}
@@ -16,6 +17,7 @@ RSpec.describe Knuckles::Dumper do
 
       expect(dumped).to eq(
         JSON.dump(
+          author: {id: 1, name: "Ernest"},
           posts: [
             {id: 1, title: "great"},
             {id: 2, title: "stuff"}

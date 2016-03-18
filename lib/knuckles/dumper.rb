@@ -10,7 +10,7 @@ module Knuckles
 
     def keys_to_arrays(objects)
       objects.each do |key, value|
-        objects[key] = value.to_a
+        objects[key] = value.to_a if value.is_a?(Set)
       end
     end
   end
