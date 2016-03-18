@@ -9,10 +9,26 @@ module Knuckles
        Knuckles::Dumper]
     end
 
-    attr_accessor :stages
+    attr_reader :stages
 
     def initialize(stages: self.class.default_stages)
       @stages = stages
+    end
+
+    def delete(stage)
+      stages.delete(stage)
+    end
+
+    def insert_after(stage, new_stage)
+      index = stages.index(stage)
+
+      stages.insert(index + 1, new_stage)
+    end
+
+    def insert_before(stage, new_stage)
+      index = stages.index(stage)
+
+      stages.insert(index, new_stage)
     end
 
     def call(objects, options)

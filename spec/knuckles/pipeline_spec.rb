@@ -6,10 +6,51 @@ RSpec.describe Knuckles::Pipeline do
       expect(pipeline.stages).not_to be_empty
     end
 
-    it "allows stages to be customeized" do
+    it "allows stages to be customeized on initialization" do
       pipeline = Knuckles::Pipeline.new(stages: [])
 
       expect(pipeline.stages).to be_empty
+    end
+  end
+
+  describe "#delete" do
+    it "removes an existing stage" do
+      pipeline = Knuckles::Pipeline.new
+
+      pipeline.delete(Knuckles::Writer)
+
+      expect(pipeline.stages).not_to include(Knuckles::Writer)
+    end
+  end
+
+  describe "#insert_after" do
+    it "adds a stage after an existing stage" do
+      custom = Module.new
+      pipeline = Knuckles::Pipeline.new
+
+      pipeline.insert_after(Knuckles::Fetcher, custom)
+
+      expect(pipeline.stages).to include(custom)
+      expect(pipeline.stages.take(2)).to eq([
+        Knuckles::Fetcher,
+        custom
+      ])
+    end
+  end
+
+  describe "#insert_before" do
+    it "adds a stage after an existing stage" do
+      custom = Module.new
+      pipeline = Knuckles::Pipeline.new
+
+      pipeline.insert_before(Knuckles::Fetcher, custom)
+
+      expect(pipeline.stages).to include(custom)
+      expect(pipeline.stages.take(2)).to eq([
+        custom,
+        Knuckles::Fetcher
+      ])
+
     end
   end
 
