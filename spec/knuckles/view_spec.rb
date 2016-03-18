@@ -13,16 +13,6 @@ RSpec.describe Knuckles::View do
     end
   end
 
-  describe ".cache_key" do
-    it "provides a default cache key strategy" do
-      klass = Struct.new(:id, :updated_at)
-
-      cache_key = TagView.cache_key(klass.new(123, Time.now))
-
-      expect(cache_key).to match(%r{tags/123/\d+})
-    end
-  end
-
   describe ".has_one" do
     it "serializes an object using the given view" do
       object = Tag.new(1, "Alpha")

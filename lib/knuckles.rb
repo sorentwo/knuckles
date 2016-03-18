@@ -7,6 +7,7 @@ module Knuckles
   autoload :Dumper, "knuckles/dumper"
   autoload :Fetcher, "knuckles/fetcher"
   autoload :Hydrator, "knuckles/hydrator"
+  autoload :Keygen, "knuckles/keygen"
   autoload :Pipeline, "knuckles/pipeline"
   autoload :Renderer, "knuckles/renderer"
   autoload :View, "knuckles/view"
@@ -14,7 +15,7 @@ module Knuckles
 
   extend self
 
-  attr_writer :cache, :notifications, :serializer
+  attr_writer :cache, :keygen, :notifications, :serializer
 
   def new(*args)
     Knuckles::Pipeline.new(*args)
@@ -22,6 +23,10 @@ module Knuckles
 
   def cache
     @cache ||= ActiveSupport::Cache::MemoryStore.new
+  end
+
+  def keygen
+    @keygen ||= Knuckles::Keygen
   end
 
   def notifications
@@ -38,6 +43,7 @@ module Knuckles
 
   def reset!
     @cache = nil
+    @keygen = nil
     @notifications = nil
     @serializer = nil
   end

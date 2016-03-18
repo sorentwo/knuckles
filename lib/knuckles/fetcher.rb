@@ -7,7 +7,7 @@ module Knuckles
     end
 
     def call(prepared, options)
-      results = get_cached(prepared, options.fetch(:view))
+      results = get_cached(prepared, options)
 
       prepared.each do |hash|
         result = results[hash[:key]]
@@ -18,9 +18,10 @@ module Knuckles
 
     private
 
-    def get_cached(prepared, view)
+    def get_cached(prepared, options)
+      kgen = options.fetch(:keygen, Knuckles.keygen)
       keys = prepared.map do |hash|
-        hash[:key] = view.cache_key(hash[:object])
+        hash[:key] = kgen.expand_key(hash[:object])
       end
 
       Knuckles.cache.read_multi(*keys)

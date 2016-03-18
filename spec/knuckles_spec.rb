@@ -10,10 +10,12 @@ RSpec.describe Knuckles do
       custom = Object.new
 
       Knuckles.cache = custom
+      Knuckles.keygen = custom
       Knuckles.notifications = custom
       Knuckles.serializer = custom
 
       expect(Knuckles.cache).to eq(custom)
+      expect(Knuckles.keygen).to eq(custom)
       expect(Knuckles.notifications).to eq(custom)
       expect(Knuckles.serializer).to eq(custom)
     end
