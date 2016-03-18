@@ -12,6 +12,8 @@ module Knuckles
       else
         write_each(objects)
       end
+
+      objects
     end
 
     private

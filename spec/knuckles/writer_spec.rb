@@ -11,19 +11,20 @@ RSpec.describe Knuckles::Writer do
 
   describe ".call" do
     it "writes all un-cached values" do
-      objects = [
+      prepared = [
         {key: "t/1/1", cached?: true,  result: {tags: [{id: 1, name: "a"}]}},
         {key: "t/2/2", cached?: false, result: {tags: [{id: 2, name: "b"}]}}
       ]
 
-      Knuckles::Writer.call(objects, {})
+      result = Knuckles::Writer.call(prepared, {})
 
+      expect(result).to eq(prepared)
       expect(Knuckles.cache.read("t/1/1")).to be_nil
       expect(Knuckles.cache.read("t/2/2")).not_to be_nil
     end
 
     it "leverages write multi for caches that support it" do
-      objects = [
+      prepared = [
         {key: "t/1/1", cached?: false, result: {tags: []}},
         {key: "t/2/1", cached?: true, result: {tags: []}}
       ]
@@ -32,7 +33,9 @@ RSpec.describe Knuckles::Writer do
 
       expect(Knuckles.cache).to receive(:write_multi) { true }
 
-      Knuckles::Writer.call(objects, {})
+      result = Knuckles::Writer.call(prepared, {})
+
+      expect(result).to eq(prepared)
     end
   end
 end
