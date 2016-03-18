@@ -8,7 +8,7 @@ RSpec.describe Knuckles::Hydrator do
 
     it "refines the object collection using hydrate" do
       objects = [Tag.new(1, "alpha"), Tag.new(2, "gamma")]
-      prepared = Knuckles.prepare(objects)
+      prepared = prepare(objects)
 
       hydrate = lambda do |hashes|
         hashes.each { |hash| hash[:object] = :updated }

@@ -5,7 +5,7 @@ RSpec.describe Knuckles::Fetcher do
 
       Knuckles.cache.write(TagView.cache_key(objects.first), "result")
 
-      objects = Knuckles.prepare(objects)
+      objects = prepare(objects)
       results = Knuckles::Fetcher.call(objects, view: TagView)
 
       expect(pluck(results, :result)).to eq(["result", nil])

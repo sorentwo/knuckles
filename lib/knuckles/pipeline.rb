@@ -16,12 +16,18 @@ module Knuckles
     end
 
     def call(objects, options)
-      prepared = Knuckles.prepare(objects)
+      prepared = prepare(objects)
 
       stages.reduce(prepared) do |results, stage|
         instrument("knuckles.stage", stage: stage.name) do
           stage.call(results, options)
         end
+      end
+    end
+
+    def prepare(objects)
+      objects.map do |object|
+        {object: object, key: nil, cached?: false, result: nil}
       end
     end
 

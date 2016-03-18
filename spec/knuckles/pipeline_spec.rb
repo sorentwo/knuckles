@@ -41,4 +41,16 @@ RSpec.describe Knuckles::Pipeline do
         .to eq([{object: "knuckles", cached?: false, key: nil, result: nil}])
     end
   end
+
+  describe "#prepare" do
+    it "wraps all objects in entities" do
+      object = Object.new
+      prepared, = Knuckles::Pipeline.new.prepare([object])
+
+      expect(prepared[:object]).to be(object)
+      expect(prepared[:key]).to be_nil
+      expect(prepared[:result]).to be_nil
+      expect(prepared[:cached?]).to be_falsey
+    end
+  end
 end

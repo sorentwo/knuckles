@@ -20,6 +20,6 @@ models = 100.times.map { |i| Post.new(i, "title", Time.new) }
 
 Benchmark.ips do |x|
   x.report("serialize.main") do
-    Knuckles.render(models, view: PostView)
+    Knuckles.new.call(models, view: PostView)
   end
 end

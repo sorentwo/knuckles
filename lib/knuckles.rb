@@ -16,6 +16,10 @@ module Knuckles
 
   attr_writer :cache, :notifications, :serializer
 
+  def new(*args)
+    Knuckles::Pipeline.new(*args)
+  end
+
   def cache
     @cache ||= ActiveSupport::Cache::MemoryStore.new
   end
@@ -32,17 +36,5 @@ module Knuckles
     @cache = nil
     @notifications = nil
     @serializer = nil
-  end
-
-  def render(objects, options = {})
-    pipeline = Knuckles::Pipeline.new
-
-    pipeline.call(objects, options)
-  end
-
-  def prepare(objects)
-    objects.map do |object|
-      {object: object, key: nil, cached?: false, result: nil}
-    end
   end
 end
