@@ -5,12 +5,12 @@ AllCops:
     - 'tmp/**/*'
     - 'vendor/**/*'
 
-Style/StringLiterals:
-  EnforcedStyle: double_quotes
+Style/IfUnlessModifier:
+  Enabled: false
 
-Style/SpaceInsideHashLiteralBraces:
-  EnforcedStyle: no_space
-  EnforcedStyleForEmptyBraces: no_space
+# Documentation is coming
+Style/Documentation:
+  Enabled: false
 
 # Extend self preserves private methods
 Style/ModuleFunction:
@@ -21,3 +21,13 @@ Style/PredicateName:
     - is_
   NamePrefixBlacklist:
     - is_
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+  EnforcedStyleForEmptyBraces: no_space
+
+Style/IndentArray:
+  Enabled: false

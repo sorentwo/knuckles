@@ -14,16 +14,18 @@ RSpec.describe Knuckles::Dumper do
 
       dumped = Knuckles::Dumper.call(objects, {})
 
-      expect(dumped).to eq(JSON.dump(
-        posts: [
-          {id: 1, title: "great"},
-          {id: 2, title: "stuff"}
-        ],
-        tags: [
-          {id: 1, name: "alpha"},
-          {id: 2, name: "gamma"}
-        ]
-      ))
+      expect(dumped).to eq(
+        JSON.dump(
+          posts: [
+            {id: 1, title: "great"},
+            {id: 2, title: "stuff"}
+          ],
+          tags: [
+            {id: 1, name: "alpha"},
+            {id: 2, name: "gamma"}
+          ]
+        )
+      )
     end
   end
 end
