@@ -4,6 +4,7 @@ RSpec.describe Knuckles::Combiner do
       prepared = [
         {
           result: {
+            author: {id: 1, name: "Michael"},
             posts: [{id: 1, title: "hello", tag_ids: [1, 2]}],
             tags: [{id: 1, name: "alpha"}, {id: 2, name: "gamma"}]
           }
@@ -18,6 +19,9 @@ RSpec.describe Knuckles::Combiner do
       combined = Knuckles::Combiner.call(prepared, {})
 
       expect(combined).to eq(
+        author: Set.new([
+          {id: 1, name: "Michael"}
+        ]),
         posts: Set.new([
           {id: 1, title: "hello", tag_ids: [1, 2]},
           {id: 2, title: "there", tag_ids: [1]}
