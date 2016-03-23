@@ -14,7 +14,9 @@ module Knuckles
 
     def keys_to_arrays(objects)
       objects.each do |_, value|
-        value.uniq! if value.is_a?(Array)
+        if value.is_a?(Array)
+          value.uniq! { |hash| hash["id".freeze] || hash[:id] }
+        end
       end
     end
   end

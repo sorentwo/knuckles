@@ -10,8 +10,8 @@ RSpec.describe Knuckles::Combiner do
           }
         }, {
           result: {
-            posts: [{id: 2, title: "there", tag_ids: [1]}],
-            tags: [{id: 1, name: "alpha"}]
+            "posts" => [{"id" => 2, "title" => "there", "tag_ids" => [1]}],
+            "tags" => [{"id" => 1, "name" => "alpha"}]
           }
         }
       ]
@@ -19,17 +19,17 @@ RSpec.describe Knuckles::Combiner do
       combined = Knuckles::Combiner.call(prepared, {})
 
       expect(combined).to eq(
-        author: [
+        "author" => [
           {id: 1, name: "Michael"}
         ],
-        posts: [
+        "posts" => [
           {id: 1, title: "hello", tag_ids: [1, 2]},
-          {id: 2, title: "there", tag_ids: [1]}
+          {"id" => 2, "title" => "there", "tag_ids" => [1]}
         ],
-        tags: [
+        "tags" => [
           {id: 1, name: "alpha"},
           {id: 2, name: "gamma"},
-          {id: 1, name: "alpha"}
+          {"id" => 1, "name" => "alpha"}
         ]
       )
     end

@@ -5,11 +5,14 @@ RSpec.describe Knuckles::Dumper do
         author: {id: 1, name: "Ernest"},
         posts: [
           {id: 1, title: "great"},
+          {id: 2, title: "stuff"},
           {id: 2, title: "stuff"}
         ],
         tags: [
           {id: 1, name: "alpha"},
-          {id: 2, name: "gamma"}
+          {id: 2, name: "gamma"},
+          {id: 1, name: "alpha"},
+          {"id" => 2, "name" => "gamma"}
         ]
       }
 

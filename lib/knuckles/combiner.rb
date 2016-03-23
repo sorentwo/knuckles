@@ -1,5 +1,3 @@
-require "set"
-
 module Knuckles
   module Combiner
     extend self
@@ -12,8 +10,8 @@ module Knuckles
       prepared.each_with_object(array_backed_hash) do |hash, memo|
         hash[:result].each do |root, values|
           case values
-          when Hash  then memo[root] << values
-          when Array then memo[root] += values
+          when Hash  then memo[root.to_s] << values
+          when Array then memo[root.to_s] += values
           end
         end
       end
