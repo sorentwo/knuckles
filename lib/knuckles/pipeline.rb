@@ -7,6 +7,7 @@ module Knuckles
        Knuckles::Hydrator,
        Knuckles::Renderer,
        Knuckles::Writer,
+       Knuckles::Enhancer,
        Knuckles::Combiner,
        Knuckles::Dumper]
     end

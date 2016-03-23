@@ -7,6 +7,7 @@ require "json"
 module Knuckles
   autoload :Combiner, "knuckles/combiner"
   autoload :Dumper, "knuckles/dumper"
+  autoload :Enhancer, "knuckles/enhancer"
   autoload :Fetcher, "knuckles/fetcher"
   autoload :Hydrator, "knuckles/hydrator"
   autoload :Keygen, "knuckles/keygen"
