@@ -9,7 +9,7 @@ module Knuckles
     end
 
     def call(prepared, _)
-      prepared.each_with_object(set_backed_hash) do |hash, memo|
+      prepared.each_with_object(array_backed_hash) do |hash, memo|
         hash[:result].each do |root, values|
           case values
           when Hash  then memo[root] << values
@@ -19,8 +19,8 @@ module Knuckles
       end
     end
 
-    def set_backed_hash
-      Hash.new { |hash, key| hash[key] = Set.new }
+    def array_backed_hash
+      Hash.new { |hash, key| hash[key] = [] }
     end
   end
 end

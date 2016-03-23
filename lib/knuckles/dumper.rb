@@ -13,8 +13,8 @@ module Knuckles
     private
 
     def keys_to_arrays(objects)
-      objects.each do |key, value|
-        objects[key] = value.to_a if value.is_a?(Set)
+      objects.each do |_, value|
+        value.uniq! if value.is_a?(Array)
       end
     end
   end

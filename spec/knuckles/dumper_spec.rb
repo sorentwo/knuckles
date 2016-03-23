@@ -3,14 +3,14 @@ RSpec.describe Knuckles::Dumper do
     it "dumps a tree of objects" do
       objects = {
         author: {id: 1, name: "Ernest"},
-        posts: Set.new([
+        posts: [
           {id: 1, title: "great"},
           {id: 2, title: "stuff"}
-        ]),
-        tags: Set.new([
+        ],
+        tags: [
           {id: 1, name: "alpha"},
           {id: 2, name: "gamma"}
-        ])
+        ]
       }
 
       dumped = Knuckles::Dumper.call(objects, {})
