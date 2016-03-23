@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module Knuckles
   module Hydrator
     extend self
 
     def name
-      "hydrator".freeze
+      "hydrator"
     end
 
     def call(prepared, options)

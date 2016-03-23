@@ -1,9 +1,17 @@
 AllCops:
   Exclude:
-    - 'bench/**/*'
-    - 'bin/*'
-    - 'tmp/**/*'
-    - 'vendor/**/*'
+    - "bench/**/*"
+    - "bin/*"
+    - "tmp/**/*"
+    - "vendor/**/*"
+
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: always
+  Exclude:
+    - "Gemfile*"
+    - "Rakefile"
+    - "*.gemspec"
+    - "spec/**/*"
 
 Style/IfUnlessModifier:
   Enabled: false

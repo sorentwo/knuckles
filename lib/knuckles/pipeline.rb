@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Knuckles
   class Pipeline
     def self.default_stages

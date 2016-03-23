@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module Knuckles
   module Fetcher
     extend self
 
     def name
-      "fetcher".freeze
+      "fetcher"
     end
 
     def call(prepared, options)

@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module Knuckles
   module Renderer
     extend self
 
     def name
-      "renderer".freeze
+      "renderer"
     end
 
     def call(objects, options)

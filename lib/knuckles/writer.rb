@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module Knuckles
   module Writer
     extend self
 
     def name
-      "writer".freeze
+      "writer"
     end
 
     def call(objects, _)

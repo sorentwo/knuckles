@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module Knuckles
   module Combiner
     extend self
 
     def name
-      "combiner".freeze
+      "combiner"
     end
 
     def call(prepared, _)
