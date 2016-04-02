@@ -4,10 +4,6 @@ module Knuckles
   module Enhancer
     extend self
 
-    def name
-      "enhancer"
-    end
-
     def call(prepared, options)
       enhancer = options[:enhancer]
 

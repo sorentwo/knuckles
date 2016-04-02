@@ -4,10 +4,6 @@ module Knuckles
   module Hydrator
     extend self
 
-    def name
-      "hydrator"
-    end
-
     def call(prepared, options)
       hydrate = options[:hydrate]
 

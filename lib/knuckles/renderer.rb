@@ -4,10 +4,6 @@ module Knuckles
   module Renderer
     extend self
 
-    def name
-      "renderer"
-    end
-
     def call(objects, options)
       view = options.fetch(:view)
 

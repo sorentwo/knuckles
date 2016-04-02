@@ -4,10 +4,6 @@ module Knuckles
   module Writer
     extend self
 
-    def name
-      "writer"
-    end
-
     def call(objects, _)
       if cache.respond_to?(:write_multi)
         write_multi(objects)

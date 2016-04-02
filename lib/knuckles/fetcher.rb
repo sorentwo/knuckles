@@ -4,10 +4,6 @@ module Knuckles
   module Fetcher
     extend self
 
-    def name
-      "fetcher"
-    end
-
     def call(prepared, options)
       results = get_cached(prepared, options)
 
