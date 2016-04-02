@@ -1,4 +1,4 @@
-RSpec.describe Knuckles::Dumper do
+RSpec.describe Knuckles::Stages::Dumper do
   describe ".call" do
     it "dumps a tree of objects" do
       objects = {
@@ -16,7 +16,7 @@ RSpec.describe Knuckles::Dumper do
         ]
       }
 
-      dumped = Knuckles::Dumper.call(objects, {})
+      dumped = Knuckles::Stages::Dumper.call(objects, {})
 
       expect(dumped).to eq(
         JSON.dump(

@@ -3,13 +3,13 @@
 module Knuckles
   class Pipeline
     def self.default_stages
-      [Knuckles::Fetcher,
-       Knuckles::Hydrator,
-       Knuckles::Renderer,
-       Knuckles::Writer,
-       Knuckles::Enhancer,
-       Knuckles::Combiner,
-       Knuckles::Dumper]
+      [Knuckles::Stages::Fetcher,
+       Knuckles::Stages::Hydrator,
+       Knuckles::Stages::Renderer,
+       Knuckles::Stages::Writer,
+       Knuckles::Stages::Enhancer,
+       Knuckles::Stages::Combiner,
+       Knuckles::Stages::Dumper]
     end
 
     attr_reader :stages

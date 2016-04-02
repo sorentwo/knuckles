@@ -1,4 +1,4 @@
-RSpec.describe Knuckles::Fetcher do
+RSpec.describe Knuckles::Stages::Fetcher do
   describe ".call" do
     it "fetches all cached data for top level objects" do
       objects = [Tag.new(1, "alpha"), Tag.new(2, "gamma")]
@@ -6,7 +6,7 @@ RSpec.describe Knuckles::Fetcher do
       Knuckles.cache.write(Knuckles.keygen.expand_key(objects.first), "result")
 
       objects = prepare(objects)
-      results = Knuckles::Fetcher.call(objects, {})
+      results = Knuckles::Stages::Fetcher.call(objects, {})
 
       expect(pluck(results, :result)).to eq(["result", nil])
       expect(pluck(results, :cached?)).to eq([true, false])
@@ -20,7 +20,7 @@ RSpec.describe Knuckles::Fetcher do
       end
 
       objects = prepare([Tag.new(1, "alpha")])
-      results = Knuckles::Fetcher.call(objects, keygen: keygen)
+      results = Knuckles::Stages::Fetcher.call(objects, keygen: keygen)
 
       expect(pluck(results, :key)).to eq(["alpha"])
     end

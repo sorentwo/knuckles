@@ -1,4 +1,4 @@
-RSpec.describe Knuckles::Combiner do
+RSpec.describe Knuckles::Stages::Combiner do
   describe ".call" do
     it "merges all results into a single object" do
       prepared = [
@@ -16,7 +16,7 @@ RSpec.describe Knuckles::Combiner do
         }
       ]
 
-      combined = Knuckles::Combiner.call(prepared, {})
+      combined = Knuckles::Stages::Combiner.call(prepared, {})
 
       expect(combined).to eq(
         "author" => [

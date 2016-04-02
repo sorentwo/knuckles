@@ -5,16 +5,10 @@ require "active_support/cache"
 require "json"
 
 module Knuckles
-  autoload :Combiner, "knuckles/combiner"
-  autoload :Dumper, "knuckles/dumper"
-  autoload :Enhancer, "knuckles/enhancer"
-  autoload :Fetcher, "knuckles/fetcher"
-  autoload :Hydrator, "knuckles/hydrator"
   autoload :Keygen, "knuckles/keygen"
   autoload :Pipeline, "knuckles/pipeline"
-  autoload :Renderer, "knuckles/renderer"
+  autoload :Stages, "knuckles/stages"
   autoload :View, "knuckles/view"
-  autoload :Writer, "knuckles/writer"
 
   extend self
 

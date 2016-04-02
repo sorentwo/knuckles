@@ -17,9 +17,9 @@ RSpec.describe Knuckles::Pipeline do
     it "removes an existing stage" do
       pipeline = Knuckles::Pipeline.new
 
-      pipeline.delete(Knuckles::Writer)
+      pipeline.delete(Knuckles::Stages::Writer)
 
-      expect(pipeline.stages).not_to include(Knuckles::Writer)
+      expect(pipeline.stages).not_to include(Knuckles::Stages::Writer)
     end
   end
 
@@ -28,11 +28,11 @@ RSpec.describe Knuckles::Pipeline do
       custom = Module.new
       pipeline = Knuckles::Pipeline.new
 
-      pipeline.insert_after(Knuckles::Fetcher, custom)
+      pipeline.insert_after(Knuckles::Stages::Fetcher, custom)
 
       expect(pipeline.stages).to include(custom)
       expect(pipeline.stages.take(2)).to eq([
-        Knuckles::Fetcher,
+        Knuckles::Stages::Fetcher,
         custom
       ])
     end
@@ -43,12 +43,12 @@ RSpec.describe Knuckles::Pipeline do
       custom = Module.new
       pipeline = Knuckles::Pipeline.new
 
-      pipeline.insert_before(Knuckles::Fetcher, custom)
+      pipeline.insert_before(Knuckles::Stages::Fetcher, custom)
 
       expect(pipeline.stages).to include(custom)
       expect(pipeline.stages.take(2)).to eq([
         custom,
-        Knuckles::Fetcher
+        Knuckles::Stages::Fetcher
       ])
     end
   end

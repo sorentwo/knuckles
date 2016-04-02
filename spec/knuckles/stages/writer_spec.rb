@@ -1,4 +1,4 @@
-RSpec.describe Knuckles::Writer do
+RSpec.describe Knuckles::Stages::Writer do
   class FakeCache
     def write_multi(*)
       true
@@ -16,7 +16,7 @@ RSpec.describe Knuckles::Writer do
         {key: "t/2/2", cached?: false, result: {tags: [{id: 2, name: "b"}]}}
       ]
 
-      result = Knuckles::Writer.call(prepared, {})
+      result = Knuckles::Stages::Writer.call(prepared, {})
 
       expect(result).to eq(prepared)
       expect(Knuckles.cache.read("t/1/1")).to be_nil
@@ -33,7 +33,7 @@ RSpec.describe Knuckles::Writer do
 
       expect(Knuckles.cache).to receive(:write_multi) { true }
 
-      result = Knuckles::Writer.call(prepared, {})
+      result = Knuckles::Stages::Writer.call(prepared, {})
 
       expect(result).to eq(prepared)
     end

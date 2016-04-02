@@ -1,4 +1,4 @@
-RSpec.describe Knuckles::Renderer do
+RSpec.describe Knuckles::Stages::Renderer do
   describe ".call" do
     it "serializes a collection of objects" do
       tag_a  = Tag.new(1, "alpha")
@@ -7,7 +7,7 @@ RSpec.describe Knuckles::Renderer do
       post_b = Post.new(2, "there", [tag_a])
 
       objects = prepare([post_a, post_b])
-      results = Knuckles::Renderer.call(objects, view: PostView)
+      results = Knuckles::Stages::Renderer.call(objects, view: PostView)
 
       expect(results[0][:result]).to eq(
         posts: [
