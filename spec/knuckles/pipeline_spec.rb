@@ -13,46 +13,6 @@ RSpec.describe Knuckles::Pipeline do
     end
   end
 
-  describe "#delete" do
-    it "removes an existing stage" do
-      pipeline = Knuckles::Pipeline.new
-
-      pipeline.delete(Knuckles::Stages::Writer)
-
-      expect(pipeline.stages).not_to include(Knuckles::Stages::Writer)
-    end
-  end
-
-  describe "#insert_after" do
-    it "adds a stage after an existing stage" do
-      custom = Module.new
-      pipeline = Knuckles::Pipeline.new
-
-      pipeline.insert_after(Knuckles::Stages::Fetcher, custom)
-
-      expect(pipeline.stages).to include(custom)
-      expect(pipeline.stages.take(2)).to eq([
-        Knuckles::Stages::Fetcher,
-        custom
-      ])
-    end
-  end
-
-  describe "#insert_before" do
-    it "adds a stage after an existing stage" do
-      custom = Module.new
-      pipeline = Knuckles::Pipeline.new
-
-      pipeline.insert_before(Knuckles::Stages::Fetcher, custom)
-
-      expect(pipeline.stages).to include(custom)
-      expect(pipeline.stages.take(2)).to eq([
-        custom,
-        Knuckles::Stages::Fetcher
-      ])
-    end
-  end
-
   describe "#call" do
     it "aggregates the result of all stages" do
       filter_a = Module.new do
