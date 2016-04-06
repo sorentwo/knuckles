@@ -9,12 +9,14 @@ Gem::Specification.new do |spec|
   spec.authors  = ["Parker Selbert"]
   spec.email    = ["parker@sorentwo.com"]
   spec.summary  = "Simple performance aware data serialization"
-  spec.homepage = ""
+  spec.homepage = "https://github.com/sorentwo/knuckles"
   spec.license  = "MIT"
 
-  spec.files         = `git ls-files -z`.split("\x0")
+  doc_files = "CHANGELOG.md LICENSE.txt README.md"
+
+  spec.files         = `git ls-files -z lib spec #{doc_files}`.split("\x0")
   spec.executables   = []
-  spec.test_files    = spec.files.grep(%r{^(spec)/})
+  spec.test_files    = spec.files.grep(%r{^spec/})
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "activesupport"
