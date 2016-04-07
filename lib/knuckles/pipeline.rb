@@ -18,7 +18,7 @@ module Knuckles
     # stages.
     #
     # @option [Array] :stages (default_stages) An array of stages to pipe
-    # results through
+    #   results through
     #
     # @example Create a default pipeline
     #
@@ -62,14 +62,14 @@ module Knuckles
     # Push a collection of objects through the stages of the pipeline. In
     # normal usage this will render the objects out to a JSON structure.
     #
-    # @param [Enumerable] A collection of objects (models) to be serialized and
-    # processed.
-    # @param [Hash] An options hash. The `call` method doesn't use any options
-    # itself, they are forwarded on to each stage. See the documentation for
-    # specific stages for the options they accept.
+    # @param [Enumerable] objects A collection of objects (models) to be
+    #   serialized and processed.
+    # @param [Hash] options The `call` method doesn't use any options itself,
+    #   they are forwarded on to each stage. See the documentation for specific
+    #   stages for the options they accept.
     #
     # @return [String] The final result as transformed by the pipeline,
-    # typically a JSON string.
+    #   typically a JSON string.
     #
     # @example Basic pipeline rendering
     #
@@ -90,10 +90,10 @@ module Knuckles
     # the object. The resulting hashes are populated with the keys and default
     # values necessary for use with the standard pipeline stages.
     #
-    # @param [Enumerable] A collection of objects to prepare
+    # @param [Enumerable] objects A collection of objects to prepare
     #
     # @return [Array[Hash]] An array of hashes, each with the keys `:object`,
-    # `:key`, `:cached?`, and `:result`.
+    #   `:key`, `:cached?`, and `:result`.
     #
     # @example Prepare a single object
     #

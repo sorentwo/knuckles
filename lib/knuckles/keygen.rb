@@ -18,7 +18,7 @@ module Knuckles
     # the object's `cache_key` method (present on `ActiveRecord` models). It
     # falls back to combining the object's `id` and `updated_at` values.
     #
-    # @param [Object] Object to caclculate key for
+    # @param [Object] object An object to caclculate the key from
     #
     # @return [String] Computed cache key
     #

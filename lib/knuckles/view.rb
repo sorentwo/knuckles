@@ -37,8 +37,8 @@ module Knuckles
     # will not be stringified or pluralized during rendering, so be aware of
     # the format.
     #
-    # @returns [Symbol] By default root is `nil`, it should be overridden to
-    # return a plural symbol.
+    # @return [Symbol, nil] By default root is `nil`, it should be overridden to
+    #   return a plural symbol.
     #
     def root
     end
@@ -46,8 +46,8 @@ module Knuckles
     # Serialize an object into a hash. This simply returns an empty hash by
     # default, it must be overridden by submodules.
     #
-    # @param [Object] The object for serializing.
-    # @param [Hash] Options to be used during serialization, i.e. `:scope`
+    # @param [Object] _object The object for serializing.
+    # @param [Hash] _options The options to be used during serialization, i.e. `:scope`
     #
     # @return [Hash] A hash representing the serialized object.
     #
@@ -69,10 +69,10 @@ module Knuckles
     # output of `data`. View relations are shallow, meaning the relations of
     # relations are not included.
     #
-    # @param [Object] The object to extract relations from
-    # @param [Hash] Options used during extraction, i.e. `:scope`
+    # @param [Object] _object The object to extract relations from
+    # @param [Hash] _options The options used during extraction, i.e. `:scope`
     #
-    # @return [Hash] The serialized associations.
+    # @return [Hash] The serialized associations
     #
     # @example Override relations
     #
@@ -92,11 +92,11 @@ module Knuckles
     # Renders an associated object using the specified view, wrapping the
     # results in an array.
     #
-    # @param [Object] The associated object to serialize.
-    # @param [Module] A view module responding to `data`.
-    # @param [Hash] Options passed to the view for rendering.
+    # @param [Object] object The associated object to serialize.
+    # @param [Module] view A module responding to `data`.
+    # @param [Hash] options Passed to the view for rendering.
     #
-    # @return [Array] A single rendered data object is always returned.
+    # @return [Array<Hash>] A single rendered data object is always returned.
     #
     # @example Render a single association
     #
@@ -108,11 +108,11 @@ module Knuckles
 
     # Renders all associated objects using the specified view.
     #
-    # @param [Array] Array of associated objects to serialize.
-    # @param [Module] A view module responding to `data`.
-    # @param [Hash] Options passed to the view for rendering.
+    # @param [Array] objects Array of associated objects to serialize.
+    # @param [Module] view A module responding to `data`.
+    # @param [Hash] options The options passed to the view for rendering.
     #
-    # @return [Array] All rendered association data.
+    # @return [Array<Hash>] All rendered association data.
     #
     # @example Render a single association
     #
