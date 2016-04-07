@@ -4,7 +4,10 @@
 
 # Knuckles (Because Sonic was Taken)
 
-What's it all about?
+Knuckles is a performance focused data serialization pipeline. More simply, it
+tries to serialize models into large JSON payloads as quickly as possible.
+
+### What's it all about?
 
 * Emphasis on caching as a composable operation
 * Reduced object instantiation
@@ -12,6 +15,26 @@ What's it all about?
 * Entirely agnostic, can be dropped into any project and integrated over time
 * Minimal runtime dependencies
 * Explicit serializer view API with as little overhead and no DSL
+
+### Is It Better?
+
+Knuckles is absolutely faster and has a lower memory overhead than uncached
+or cached usage of `ActiveModelSerializers`, and significantly faster than
+cached use of `ActiveModelSerializers` with the [perforated][perforated] gem.
+
+Here are performance and memory comparisons for an endpoint that has been cached
+with Perforated and with Knuckles. All measurments were done with production
+settings over the local network.
+
+|                | average | longest | shortest | allocated | retained |
+| -------------- | ------- | ------- | -------- | --------- | -------- |
+| perforated/ams | 230ms   | 560ms   | 190ms    | 148,735   | 18,203   |
+| knuckles/ams	 | 30ms    | 60ms    | 20ms     | 19,603    | 136      |
+
+These are measurements for a sizable payload with hundreds of associated
+records.
+
+[perforated]: https://github.com/sorentwo/perforated
 
 ## Installation
 
@@ -46,27 +69,31 @@ end
 With the top level module configured it is simple to jump right into rendering,
 but we'll look at configuring the pipeline first.
 
-## Defining Views
+## Defining Views for Rendering
 
-The interface for defining serializers is largely based on Active Model
-Serializers, but with a few key differences.
+While you can use Knuckles with other serializers, you can also use the provided
+view layer. Knuckles views are simple templates that let you build up data and
+relations. They look like this:
 
 ```ruby
-class ScoutSerializer
-  include Knuckles::Serializer
+module ScoutView
+  extend Knuckles::View
 
-  root 'scout'
+  def self.root
+    :scouts
+  end
 
-  attributes :id, :email, :display_name
+  def self.data(object, options)
+    {id: object.id, email: object.email, name: object.name}
+  end
 
-  has_one  :thing, serializer: ThingSerializer
-  has_many :other, serializer: OtherThingSerializer
-
-  def display_name(object, options)
-    "#{object.first_name} #{object.last_name}"
+  def self.relations(object, options)
+    {things: has_many(object.things, ThingView)}
   end
 end
 ```
+
+See `Knuckles::View` for more usage details.
 
 ## Contributing
 
