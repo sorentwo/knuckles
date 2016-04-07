@@ -1,3 +1,11 @@
+## v0.3.0 - 2016-04-07
+
+* Added: Tons of documentation.
+* Removed: Remove stage manipulation (`insert_*`, `delete`). All configuration
+  must be done on pipeline init.
+* Change: Move stage modules into the `Stages` namespace.
+* Change: Use module names rather than provide a custom name method.
+
 ## v0.2.0 - 2016-03-23
 
 * Add: Introduce the enhancer stage, used to augment data after it has been
