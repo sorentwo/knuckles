@@ -47,7 +47,8 @@ module Knuckles
     # default, it must be overridden by submodules.
     #
     # @param [Object] _object The object for serializing.
-    # @param [Hash] _options The options to be used during serialization, i.e. `:scope`
+    # @param [Hash] _options The options to be used during serialization, i.e.
+    #   `:scope`
     #
     # @return [Hash] A hash representing the serialized object.
     #
