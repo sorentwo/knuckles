@@ -4,6 +4,7 @@ gemspec
 
 gem "rubocop", require: false
 gem "coveralls", require: false
+gem "yard", require: false
 
 group :benchmarking do
   gem "benchmark-ips"
