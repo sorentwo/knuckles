@@ -31,8 +31,17 @@ require "json"
 module Knuckles
   autoload :Keygen, "knuckles/keygen"
   autoload :Pipeline, "knuckles/pipeline"
-  autoload :Stages, "knuckles/stages"
   autoload :View, "knuckles/view"
+
+  module Stages
+    autoload :Combiner, "knuckles/stages/combiner"
+    autoload :Dumper, "knuckles/stages/dumper"
+    autoload :Enhancer, "knuckles/stages/enhancer"
+    autoload :Fetcher, "knuckles/stages/fetcher"
+    autoload :Hydrator, "knuckles/stages/hydrator"
+    autoload :Renderer, "knuckles/stages/renderer"
+    autoload :Writer, "knuckles/stages/writer"
+  end
 
   extend self
 
