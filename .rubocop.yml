@@ -4,6 +4,7 @@ AllCops:
     - "bin/*"
     - "tmp/**/*"
     - "vendor/**/*"
+  TargetRubyVersion: 2.3
 
 Style/FrozenStringLiteralComment:
   EnforcedStyle: always
