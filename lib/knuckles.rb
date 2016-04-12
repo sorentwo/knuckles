@@ -33,6 +33,10 @@ module Knuckles
   autoload :Pipeline, "knuckles/pipeline"
   autoload :View, "knuckles/view"
 
+  module Active
+    autoload :Hydrator, "knuckles/active/hydrator"
+  end
+
   module Stages
     autoload :Combiner, "knuckles/stages/combiner"
     autoload :Dumper, "knuckles/stages/dumper"
