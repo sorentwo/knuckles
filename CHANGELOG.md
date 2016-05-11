@@ -1,3 +1,12 @@
+## v0.4.0 - 2016-05-11
+
+* Added: `Knuckles::Active::Hydrator`, a hydrator specifically designed to work
+  with `ActiveRecord`. It converts a relation of minimally loaded `ActiveRecord`
+  models into fully loaded models ready for serialization.
+* Added: A compatibility layer within the `Renderer` stage to ease in the
+  transition from `ActiveModelSerializers`. Both `Knuckles::View` or `AMS`
+  instances now work when passed as the `view` option.
+
 ## v0.3.0 - 2016-04-07
 
 * Added: Tons of documentation.
