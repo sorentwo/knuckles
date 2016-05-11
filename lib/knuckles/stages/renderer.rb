@@ -18,9 +18,10 @@ module Knuckles
       private
 
       def do_render(object, view, options)
-        view.relations(object, options).merge!(
-          view.root => [view.data(object, options)]
-        )
+        case view
+        when Knuckles::View then view.render(object, options)
+        else view.new(object, options).as_json
+        end
       end
     end
   end

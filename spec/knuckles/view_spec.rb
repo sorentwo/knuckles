@@ -35,4 +35,14 @@ RSpec.describe Knuckles::View do
       )
     end
   end
+
+  describe ".render" do
+    it "performs combined rendering of relations and data" do
+      tag = Tag.new(1, "Alpha")
+
+      expect(TagView.render(tag)).to eq(
+        tags: [{id: 1, name: "Alpha"}]
+      )
+    end
+  end
 end

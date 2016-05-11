@@ -28,5 +28,25 @@ RSpec.describe Knuckles::Stages::Renderer do
         ]
       )
     end
+
+    it "serializes using a class based renderer" do
+      tag = Tag.new(1, "alpha")
+
+      ar_view = Class.new do
+        def initialize(object, _options)
+          @object = object
+        end
+
+        def as_json
+          {tags: [{id: @object.id, name: @object.name}]}
+        end
+      end
+
+      results = Knuckles::Stages::Renderer.call(prepare([tag]), view: ar_view)
+
+      expect(results[0][:result]).to eq(
+        tags: [{id: 1, name: "alpha"}]
+      )
+    end
   end
 end

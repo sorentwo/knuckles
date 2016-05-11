@@ -43,6 +43,23 @@ module Knuckles
     def root
     end
 
+    # Convenience for combining the results of data and relations
+    # into a single object.
+    #
+    # @param [Object] _object The object for serializing.
+    # @param [Hash] _options The options to be used during serialization, i.e.
+    #   `:scope`
+    #
+    # @return [Hash] A hash representing the serialized object and relations.
+    #
+    # @example Rendering an object
+    #
+    #   TagView.render(tag) #=> {tags: [{id: 1, name: "Alpha"}]}
+    #
+    def render(object, options = {})
+      relations(object, options).merge!(root => [data(object, options)])
+    end
+
     # Serialize an object into a hash. This simply returns an empty hash by
     # default, it must be overridden by submodules.
     #
