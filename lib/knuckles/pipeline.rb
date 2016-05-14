@@ -30,7 +30,7 @@ module Knuckles
     #     Knuckles::Stages::Renderer,
     #     Knuckles::Stages::Combiner,
     #     Knuckles::Stages::Dumper
-    #   ]
+    #   ])
     def initialize(stages: default_stages)
       @stages = stages.freeze
     end
