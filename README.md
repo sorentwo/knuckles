@@ -233,6 +233,35 @@ end
 
 See `Knuckles::View` for more usage details.
 
+## Rendering in Rails
+
+One driving factor of Knuckles is that code should be explicit. As a result
+there isn't a default Railtie that will integrate Knuckles into the
+`ActiveController` rendering process for you. Luckily there isn't much to
+setting up a new pipeline for rendering. Add this to your
+`ApplicationController` or an API specific controller:
+
+```ruby
+def knuckles_render(relation, options)
+  Knuckles::Pipeline.new.call(relation, options)
+end
+```
+
+Now you can easily render responses:
+
+```ruby
+def index
+  posts = posts.published.paginate(pagination_params)
+
+  render json: knuckles_render(
+    posts.select(:id, :updated_at),
+    relation: posts.prepared,
+    view: PostView,
+    scope: current_user,
+  )
+end
+```
+
 ## Contributing
 
 1. Fork it ( https://github.com/sorentwo/knuckles/fork )
