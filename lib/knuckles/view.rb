@@ -46,8 +46,8 @@ module Knuckles
     # Convenience for combining the results of data and relations
     # into a single object.
     #
-    # @param [Object] _object The object for serializing.
-    # @param [Hash] _options The options to be used during serialization, i.e.
+    # @param [Object] object The object for serializing.
+    # @param [Hash] options The options to be used during serialization, i.e.
     #   `:scope`
     #
     # @return [Hash] A hash representing the serialized object and relations.
