@@ -24,8 +24,8 @@ module Knuckles
       #
       # @example Hydrating missing objects
       #
-      #   prepared = [Post.new(1), Post.new(2)]
       #   relation = Post.all.preload(:author, :comments)
+      #   prepared = relation.select(:id, :updated_at)
       #
       #   Knuckles::Active::Hydrator.call(prepared, relation: relation) #=>
       #     # [{object: #Post<1>, cached?: false, ...

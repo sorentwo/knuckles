@@ -2,16 +2,37 @@
 
 module Knuckles
   module Stages
+    # The fetcher is responsible for bulk retrieval of data from the cache.
+    # Fetching is done using a single `read_multi` operation, which is
+    # multiplexed in caches like Redis or MemCached.
+    #
+    # The underlying cache *must* support `read_multi` for the stage to work.
     module Fetcher
       extend self
 
+      # Fetch all previously cached objects from the configured store.
+      #
+      # @param [Enumerable] prepared The prepared collection to fetch
+      # @option [Module] :keygen (Knuckles.keygen) The cache key generator used
+      #   to construct an entries cache_key. It can be any object that responds
+      #   to `expand_key`
+      #
+      # @example Provide a custom keygen
+      #
+      #     keygen = Module.new do
+      #       def self.expand_key(object)
+      #         object.name
+      #       end
+      #     end
+      #
+      #     Knuckles::Stages::Fetcher.call(prepared, keygen: keygen)
+      #
       def call(prepared, options)
         results = get_cached(prepared, options)
 
         prepared.each do |hash|
-          result = results[hash[:key]]
-          hash[:cached?] = !result.nil?
-          hash[:result] = result
+          hash[:result] = results[hash[:key]]
+          hash[:cached?] = !hash[:result].nil?
         end
       end
 

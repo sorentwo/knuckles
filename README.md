@@ -143,7 +143,7 @@ the final values. Another use of enhancers is personalizing an otherwise generic
 response.
 
 ```ruby
-# Removing "confidential" data from the rendered data
+# Removing staff only content from the rendered data
 pipeline.call(posts,
   scope: current_user,
   enhancer: lambda do |result, options|
