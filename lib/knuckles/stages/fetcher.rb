@@ -27,6 +27,13 @@ module Knuckles
       #
       #     Knuckles::Stages::Fetcher.call(prepared, keygen: keygen)
       #
+      # @example Use a lambda as a keygen
+      #
+      #     Knuckles::Stages::Fetcher.call(
+      #       prepared,
+      #       keygen: -> (object) { object.name }
+      #     )
+      #
       def call(prepared, options)
         results = get_cached(prepared, options)
 
@@ -41,10 +48,18 @@ module Knuckles
       def get_cached(prepared, options)
         kgen = options.fetch(:keygen, Knuckles.keygen)
         keys = prepared.map do |hash|
-          hash[:key] = kgen.expand_key(hash[:object])
+          hash[:key] = expand_key(kgen, hash[:object])
         end
 
         Knuckles.cache.read_multi(*keys)
+      end
+
+      def expand_key(keygen, object)
+        if keygen.respond_to?(:call)
+          keygen.call(object)
+        else
+          keygen.expand_key(object)
+        end
       end
     end
   end

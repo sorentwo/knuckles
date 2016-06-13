@@ -24,6 +24,15 @@ RSpec.describe Knuckles::Stages::Fetcher do
 
       expect(pluck(results, :key)).to eq(["alpha"])
     end
+
+    it "allows using a lambda as a keygen" do
+      results = Knuckles::Stages::Fetcher.call(
+        prepare([Tag.new(1, "alpha")]),
+        keygen: -> (object) { object.name }
+      )
+
+      expect(pluck(results, :key)).to eq(["alpha"])
+    end
   end
 
   def pluck(enum, key)

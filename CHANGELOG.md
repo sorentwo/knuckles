@@ -1,3 +1,8 @@
+## Unreleased
+
+* Added: Accept a `proc` or any callable object as the `keygen`. This simplifies
+  overriding the cache key on a per-instance basis.
+
 ## v0.4.0 - 2016-05-11
 
 * Added: `Knuckles::Active::Hydrator`, a hydrator specifically designed to work
