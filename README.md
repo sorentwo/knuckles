@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/sorentwo/knuckles.svg?branch=master)](https://travis-ci.org/sorentwo/knuckles)
 [![Coverage Status](https://coveralls.io/repos/github/sorentwo/knuckles/badge.svg?branch=master)](https://coveralls.io/github/sorentwo/knuckles?branch=master)
 [![Code Climate](https://codeclimate.com/github/sorentwo/knuckles/badges/gpa.svg)](https://codeclimate.com/github/sorentwo/knuckles)
+[![Inline Docs](http://inch-ci.org/github/sorentwo/knuckles.svg?branch=master)](http://inch-ci.org/github/sorentwo/knuckles)
 
 # Knuckles (Because Sonic was Taken)
 
