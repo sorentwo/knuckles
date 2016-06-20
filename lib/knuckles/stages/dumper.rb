@@ -15,7 +15,7 @@ module Knuckles
       # Afterwards the complete hash is serialized using the serializer
       # configured at `Knuckles.serializer`.
       #
-      # @param [Enumerable] objects A collection of hashes to be dumped
+      # @param [Enumerable<Hash>] objects A collection of hashes to be dumped
       # @param [Hash] _options Options aren't used, but are accepted
       #   to maintain a consistent interface
       #

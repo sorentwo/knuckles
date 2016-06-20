@@ -17,9 +17,8 @@ Style/FrozenStringLiteralComment:
 Style/IfUnlessModifier:
   Enabled: false
 
-# Documentation is coming
 Style/Documentation:
-  Enabled: false
+  Enabled: true
 
 # Extend self preserves private methods
 Style/ModuleFunction:

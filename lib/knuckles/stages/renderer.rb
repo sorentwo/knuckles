@@ -2,17 +2,18 @@
 
 module Knuckles
   module Stages
-    # After un-cached models have been hydrated they can be rendered. Rendering is
-    # synonymous with converting a model to a hash, like calling `as_json` on an
-    # `ActiveRecord` model. Knuckles provides a minimal (but fast) view module that
-    # can be used with the rendering step. Alternatively, if you're migrating from
-    # `ActiveModelSerializers` you can pass in an AMS class instead.
+    # After un-cached models have been hydrated they can be rendered. Rendering
+    # is synonymous with converting a model to a hash, like calling `as_json`
+    # on an `ActiveRecord` model. Knuckles provides a minimal (but fast) view
+    # module that can be used with the rendering step. Alternatively, if you're
+    # migrating from `ActiveModelSerializers` you can pass in an AMS class
+    # instead.
     module Renderer
       extend self
 
       # Serialize all un-cached objects into hashes.
       #
-      # @param [Enumerable] prepared The prepared collection to be rendered
+      # @param [Enumerable] objects The prepared collection to be rendered
       # @option [Module] :view A `Knuckles::View` compliant module,
       #   it will be passed the object and any options. Alternately,
       #   a class compatible with the `ActiveModelSerializers` API.

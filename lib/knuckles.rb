@@ -33,10 +33,13 @@ module Knuckles
   autoload :Pipeline, "knuckles/pipeline"
   autoload :View, "knuckles/view"
 
+  # Top level wrapper for stages that are expected to interact with `Active*`
+  # libraries, such as `ActiveModel`.
   module Active
     autoload :Hydrator, "knuckles/active/hydrator"
   end
 
+  # Top level wrapper for standard pipleline stages.
   module Stages
     autoload :Combiner, "knuckles/stages/combiner"
     autoload :Dumper, "knuckles/stages/dumper"
@@ -104,7 +107,8 @@ module Knuckles
     yield self
   end
 
-  # @private
+  # Reset all configuration values back to `nil`, restoring them to the
+  # defaults. This is useful for testing because configuration is global.
   def reset!
     @cache = nil
     @keygen = nil
