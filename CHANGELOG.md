@@ -1,7 +1,8 @@
-## Unreleased
+## v0.5.0 - 2016-07-08
 
 * Added: Accept a `proc` or any callable object as the `keygen`. This simplifies
   overriding the cache key on a per-instance basis.
+* Added: Lots of documentation! All code has inline documentation now.
 
 ## v0.4.0 - 2016-05-11
 
